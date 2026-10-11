@@ -428,7 +428,8 @@ p { margin: 0 0 1em; }
 .stage.is-visible .stage-line { stroke-dashoffset: 0; }
 .stage-labels {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   font-family: var(--font-label);
   font-size: 10px;
   text-transform: uppercase;
