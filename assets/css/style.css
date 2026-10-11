@@ -23,7 +23,9 @@
 
   --font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --font-label: "Archivo", system-ui, sans-serif;  /* bred, spærret versal som "GRAND TOUR STAGE WINS" */
+  --font-label: "Archivo", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", "Times New Roman", serif;   /* accent, som en gravering */
+  --shadow-soft: 0 1px 1px rgba(29,29,27,.04), 0 8px 16px -6px rgba(29,29,27,.10), 0 30px 60px -20px rgba(29,29,27,.22);  /* bred, spærret versal som "GRAND TOUR STAGE WINS" */
 
   --wrap: 1200px;
   --gutter: clamp(16px, 4vw, 40px);
@@ -45,6 +47,7 @@ body {
   font-size: 17px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum" 1;
   overflow-x: hidden;
 }
 
@@ -66,7 +69,7 @@ p { margin: 0 0 1em; }
   inset: 0;
   pointer-events: none;
   z-index: 100;
-  opacity: .12;
+  opacity: .07;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
@@ -128,36 +131,51 @@ p { margin: 0 0 1em; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .6em;
+  gap: .7em;
   background: var(--bg);
   color: var(--paper);
   border: 0;
-  border-radius: var(--radius);
-  padding: 16px 26px;
-  font: 600 15px/1 var(--font-sans);
-  letter-spacing: .02em;
+  border-radius: 1px;
+  padding: 18px 30px;
+  font: 600 12.5px/1 var(--font-label);
+  font-stretch: 118%;
+  letter-spacing: .16em;
+  text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
   position: relative;
-  transition: transform .2s var(--ease), background .2s;
-  /* hård, "trykt" skygge */
-  box-shadow: 4px 4px 0 var(--gold);
+  transition: background .35s var(--ease);
+  box-shadow: 0 10px 24px -12px rgba(29,29,27,.5);
 }
-.btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--gold); }
-.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--gold); }
-.btn .ic-inline { color: var(--gold-light); }
-.btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
-.btn-sm { padding: 11px 16px; font-size: 13.5px; box-shadow: 3px 3px 0 var(--gold); }
-.btn-block { width: 100%; padding-block: 20px; font-size: 16px; }
+/* indre guldkant, som en facet */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(217, 185, 119, .45);
+  pointer-events: none;
+  transition: inset .35s var(--ease), border-color .35s var(--ease);
+}
+.btn:hover { background: #2A2A27; }
+.btn:hover::after { inset: 3px; border-color: rgba(217, 185, 119, .9); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+.btn-sm { padding: 12px 18px; font-size: 11px; }
+.btn-sm::after { inset: 3px; }
+.btn-block { width: 100%; padding-block: 22px; font-size: 13px; }
 
-.ic-inline { width: 18px; height: 18px; }
+.ic-inline { width: 16px; height: 16px; }
+.btn .ic-inline { color: var(--gold-light); }
 .btn:hover .ic-inline { animation: spin 1.2s linear infinite; }
 
 .link-arrow {
-  font-weight: 600;
+  font: 600 12.5px/1 var(--font-label);
+  font-stretch: 118%;
+  letter-spacing: .16em;
+  text-transform: uppercase;
   text-decoration: none;
-  border-bottom: 1.5px solid currentColor;
-  padding-bottom: 2px;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 6px;
 }
 .link-arrow::after { content: " →"; transition: margin .2s; }
 .link-arrow:hover::after { margin-left: 4px; }
@@ -190,8 +208,10 @@ p { margin: 0 0 1em; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(.92) contrast(1.03);
+  filter: saturate(.94) contrast(1.02);
+  transition: transform 1.4s var(--ease);
 }
+.gallery .ph:hover img { transform: scale(1.03); }
 .ph img.is-missing { display: none; }
 .ph-portrait { aspect-ratio: 7 / 10; }
 .ph-ride img { object-position: 40% 22%; }
@@ -205,7 +225,8 @@ p { margin: 0 0 1em; }
   font-size: 10px;
   text-transform: uppercase;
   padding: 5px 9px 5px 22px;
-  transform: rotate(-1.5deg);
+  backdrop-filter: blur(6px);
+  background: rgba(244, 243, 238, .88);
 }
 /* lille guldindeks i mærkaten */
 .ph .tag::before {
@@ -235,25 +256,30 @@ p { margin: 0 0 1em; }
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  height: 64px;
+  height: 72px;
 }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
-  font-size: 19px;
-  font-weight: 500;
-  font-stretch: 85%;
-  letter-spacing: -.01em;
+  font-size: 13px;
+  font-weight: 400;
+  font-stretch: 125%;
+  letter-spacing: .3em;
+  text-transform: uppercase;
 }
-.brand b { font-weight: 800; margin-left: 2px; }
+.brand b { font-weight: 700; }
+.brand span { white-space: nowrap; }
 .brand-wheel { width: 26px; height: 26px; color: var(--gold); animation: spin 14s linear infinite; }
 .nav { display: flex; gap: 28px; }
 .nav a {
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
+  font-stretch: 118%;
+  letter-spacing: .16em;
+  text-transform: uppercase;
   color: var(--ink-soft);
 }
 .nav a:hover { color: var(--ink); }
@@ -267,13 +293,25 @@ p { margin: 0 0 1em; }
   align-items: center;
 }
 .hero h1 {
-  font-size: clamp(40px, 6.2vw, 86px);
-  font-weight: 700;
-  font-stretch: 92%;
+  font-size: clamp(30px, 4.2vw, 58px);
+  font-weight: 500;
+  font-stretch: 110%;
   text-transform: uppercase;
-  letter-spacing: -.005em;
-  line-height: .96;
+  letter-spacing: .02em;
+  line-height: 1.04;
   margin-bottom: 1.6rem;
+}
+.hero h1 em {
+  display: block;
+  margin-top: .06em;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  text-transform: none;
+  letter-spacing: -.01em;
+  font-size: 1.5em;
+  line-height: .95;
 }
 .lead { font-size: clamp(17px, 1.5vw, 19px); color: var(--ink-soft); max-width: 34em; }
 .hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; margin: 2rem 0 2.6rem; }
@@ -292,10 +330,11 @@ p { margin: 0 0 1em; }
   text-transform: uppercase;
   color: var(--steel);
 }
-.hero-facts dd { margin: 4px 0 0; font-weight: 700; font-size: 20px; font-stretch: 85%; }
+.hero-facts dd { margin: 6px 0 0; font-weight: 400; font-size: 24px; line-height: 1.1; font-family: var(--font-serif); }
 
+.hero-copy { position: relative; z-index: 1; }
 .hero-media { position: relative; margin: 0; isolation: isolate; }
-.hero-media .ph { transform: rotate(1.2deg); box-shadow: 14px 14px 0 var(--steel-light); }
+.hero-media .ph, .buy-media .ph { border: 0; outline: 1px solid rgba(255,255,255,.55); outline-offset: -10px; box-shadow: var(--shadow-soft); }
 /* Solstråle-guilloche som på skiven, bag billedet */
 .hero-media::before {
   content: "";
@@ -333,8 +372,7 @@ p { margin: 0 0 1em; }
   z-index: 2;
   padding: 6px;
   background: var(--steel-metal);
-  box-shadow: 0 10px 24px rgba(29,29,27,.22), inset 0 0 0 1px rgba(0,0,0,.15);
-  transform: rotate(-8deg);
+  box-shadow: 0 2px 3px rgba(29,29,27,.12), 0 18px 34px -10px rgba(29,29,27,.35), inset 0 0 0 1px rgba(0,0,0,.15);
 }
 .medal svg {
   width: 100%;
@@ -417,7 +455,7 @@ p { margin: 0 0 1em; }
 .stage-labels .kom { color: var(--gold-ink); }
 
 /* Historien ---------------------------------------------------------- */
-.story { padding: clamp(64px, 10vw, 128px) 0; }
+.story { padding: clamp(80px, 12vw, 160px) 0; }
 .story-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -426,28 +464,31 @@ p { margin: 0 0 1em; }
 }
 .story-label { grid-column: 1 / -1; }
 h2 {
-  font-size: clamp(32px, 4.2vw, 54px);
-  font-weight: 700;
-  font-stretch: 92%;
+  font-size: clamp(24px, 2.8vw, 36px);
+  font-weight: 500;
+  font-stretch: 112%;
+  letter-spacing: .05em;
   text-transform: uppercase;
 }
 .story-body .big {
-  font-size: clamp(24px, 2.6vw, 34px);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -.015em;
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 3.6vw, 48px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.01em;
+  color: var(--ink) !important;
   margin-bottom: 1.2em;
 }
 .story-body p { color: var(--ink-soft); max-width: 36em; }
 blockquote {
   margin: 2.2rem 0 0;
   padding: 1.4rem 0 0 1.4rem;
-  border-left: 3px solid var(--gold);
+  border-left: 1px solid var(--gold);
 }
-blockquote p { font-size: 20px; color: var(--ink) !important; font-style: italic; }
+blockquote p { font-family: var(--font-serif); font-size: 26px; line-height: 1.2; color: var(--ink) !important; font-style: italic; }
 blockquote cite { font-style: normal; font-family: var(--font-label); font-size: 10.5px; text-transform: uppercase; color: var(--steel); }
 .story-media { margin: 0; max-width: 420px; justify-self: end; width: 100%; }
-.story-media .ph { filter: grayscale(1) contrast(1.1); transform: rotate(-1deg); }
+.story-media .ph { filter: grayscale(1) contrast(1.05); border: 0; box-shadow: var(--shadow-soft); }
 .story-media figcaption {
   display: flex;
   align-items: center;
@@ -501,14 +542,14 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   gap: 2px 14px;
   align-items: center;
 }
-.spec .ic { grid-row: span 2; width: 30px; height: 30px; color: var(--steel); }
+.spec .ic { grid-row: span 2; width: 28px; height: 28px; color: var(--gold); opacity: .85; }
 .spec h3 {
   font-family: var(--font-label);
   font-size: 10px;
   text-transform: uppercase;
   color: var(--steel);
 }
-.spec p { margin: 0; font-weight: 600; }
+.spec p { margin: 0; font-family: var(--font-serif); font-size: 21px; line-height: 1.2; }
 
 /* Tal-bånd ----------------------------------------------------------- */
 .numberband {
@@ -521,17 +562,17 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 .numberband-track {
   display: flex;
   width: max-content;
-  animation: roll 40s linear infinite;
+  animation: roll 70s linear infinite;
 }
 .numberband-track span {
   display: flex;
   align-items: center;
   font-size: clamp(64px, 11vw, 160px);
-  font-weight: 600;
-  font-stretch: 92%;
+  font-weight: 300;
+  font-stretch: 100%;
   line-height: .9;
   white-space: nowrap;
-  -webkit-text-stroke: 1.2px var(--steel-light);
+  -webkit-text-stroke: 1px rgba(196, 199, 199, .75);
   color: transparent;
 }
 /* guldindeks mellem årene */
@@ -552,7 +593,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 
 /* Køb ---------------------------------------------------------------- */
 .buy {
-  padding: clamp(64px, 10vw, 128px) 0;
+  padding: clamp(80px, 12vw, 160px) 0;
   background: var(--paper-2);
   border-top: 1px solid var(--line);
 }
@@ -563,40 +604,38 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   align-items: start;
 }
 .buy-media { margin: 0; position: sticky; top: 96px; }
-.buy-media .ph { box-shadow: -14px 14px 0 var(--stone); }
 
 .buy-panel {
   background: var(--paper);
   border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
   padding: clamp(24px, 3.5vw, 44px);
   position: relative;
 }
-/* "tape" i hjørnet — børstet stål */
+/* tynd guldlinje i toppen, som en facet på kassen */
 .buy-panel::before {
   content: "";
   position: absolute;
-  top: -12px; right: 32px;
-  width: 92px; height: 24px;
-  background: repeating-linear-gradient(90deg, rgba(255,255,255,.35) 0 1px, transparent 1px 3px), linear-gradient(180deg, #D9DBD8, #AEB2B3);
-  opacity: .9;
-  transform: rotate(4deg);
-  clip-path: polygon(2% 8%, 98% 0, 100% 92%, 0 100%);
+  top: -1px; left: -1px; right: -1px;
+  height: 2px;
+  background: var(--gold-metal);
 }
 .buy-panel .section-no { display: flex; }
-.buy-panel h2 { font-size: clamp(32px, 3.6vw, 48px); margin-bottom: 1rem; }
+.buy-panel h2 { font-size: clamp(24px, 2.4vw, 32px); margin-bottom: 1rem; }
 .variant { font-family: var(--font-label); font-size: 10.5px; text-transform: uppercase; color: var(--ink-soft); margin: -.4rem 0 1.2rem; }
-.buy-panel h2 span { display: block; margin-top: .3em; line-height: 1.15; color: var(--steel); font-weight: 600; font-stretch: 85%; text-transform: none; font-size: .56em; letter-spacing: 0; }
+.buy-panel h2 span { display: block; margin-top: .2em; line-height: 1.1; color: var(--steel); font-family: var(--font-serif); font-style: italic; font-weight: 400; font-stretch: 100%; text-transform: none; font-size: 1.2em; letter-spacing: 0; }
 .price {
-  font-size: 30px;
-  font-weight: 700;
-  font-stretch: 85%;
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1;
   margin-bottom: 1.6rem;
 }
-.price s { font-size: 18px; font-weight: 500; color: var(--steel); margin-left: 6px; }
+.price s { font-size: 22px; font-weight: 400; color: var(--steel); margin-left: 6px; }
 .price-note { font-size: 13.5px; color: var(--gold-ink); margin: -1rem 0 1.4rem; }
 .price small { font-size: 10px; text-transform: uppercase; color: var(--steel); font-family: var(--font-label); }
 
-.qty-form { padding-top: 1.4rem; border-top: 1px dashed rgba(27,28,30,.3); }
+.qty-form { padding-top: 1.4rem; border-top: 1px solid var(--line); }
 .qty-label {
   display: block;
   font-family: var(--font-label);
@@ -648,7 +687,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 .qty input::-webkit-outer-spin-button,
 .qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .qty-total { margin: 0; color: var(--ink-soft); }
-.qty-total strong { color: var(--ink); font-size: 22px; font-stretch: 85%; margin-left: 4px; }
+.qty-total strong { color: var(--ink); font-family: var(--font-serif); font-weight: 400; font-size: 28px; margin-left: 6px; }
 .qty-hint { font-size: 13px; color: var(--steel); margin: 10px 0 18px; }
 .qty-hint.is-max { color: var(--gold-ink); }
 .qty-form.is-added .btn { background: var(--stone); }
@@ -662,11 +701,11 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   gap: 12px;
 }
 .usps li { display: flex; gap: 12px; font-size: 14.5px; line-height: 1.45; color: var(--ink-soft); }
-.usps svg { width: 20px; height: 20px; flex: none; color: var(--gold); margin-top: 1px; }
+.usps svg { width: 16px; height: 16px; flex: none; color: var(--gold); margin-top: 1px; }
 .usps b { color: var(--ink); font-weight: 600; display: block; }
 
 /* FAQ ---------------------------------------------------------------- */
-.faq { padding: clamp(64px, 10vw, 128px) 0; border-top: 1px solid var(--line); }
+.faq { padding: clamp(80px, 12vw, 160px) 0; border-top: 1px solid var(--line); }
 .faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(24px, 4vw, 56px); }
 .faq-list details { border-bottom: 1px solid var(--line); }
 .faq-list { padding-top: 12px; border-top: 1px solid var(--ink);
@@ -676,9 +715,11 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 .faq-list summary {
   list-style: none;
   cursor: pointer;
-  padding: 22px 40px 22px 0;
-  font-weight: 600;
-  font-size: 18px;
+  padding: 24px 40px 24px 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.2;
   position: relative;
 }
 .faq-list summary::-webkit-details-marker { display: none; }
@@ -687,7 +728,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   position: absolute;
   right: 4px; top: 50%;
   translate: 0 -50%;
-  font: 400 26px/1 var(--font-mono);
+  font: 300 24px/1 var(--font-sans);
   color: var(--gold);
   transition: rotate .25s var(--ease);
 }
@@ -707,6 +748,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 
 /* Sticky køb-bar (mobil) --------------------------------------------- */
 .sticky-buy {
+  backdrop-filter: blur(10px);
   position: fixed;
   left: 12px; right: 12px; bottom: 12px;
   z-index: 60;
@@ -716,8 +758,8 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   gap: 12px;
   padding: 10px 10px 10px 16px;
   background: var(--paper);
-  border: 2px solid var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
   transform: translateY(140%);
   transition: transform .3s var(--ease);
 }
@@ -737,9 +779,10 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 @media (max-width: 760px) {
   body { font-size: 16px; }
   .nav { display: none; }
+  .brand { letter-spacing: .2em; font-size: 12px; gap: 10px; }
   .hero-grid, .buy-grid, .faq-grid, .story-grid, .footer-inner { grid-template-columns: 1fr; }
   .hero-media { order: -1; margin-right: 10px; margin-bottom: 52px; }
-  .hero-media .ph { aspect-ratio: 1; box-shadow: 10px 10px 0 var(--steel-light); }
+  .hero-media .ph { aspect-ratio: 1; }
   .medal { left: auto; right: -6px; bottom: -40px; width: 112px; height: 112px; padding: 5px; }
   .dial-ring { width: 118%; }
   .hero-media::before { width: 125%; }
@@ -752,7 +795,6 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   .gallery .ph-wide { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 5; }
   .specs { grid-template-columns: 1fr; }
   .buy-media { position: static; margin-left: 10px; }
-  .buy-media .ph { box-shadow: -10px 10px 0 var(--stone); }
   .sticky-buy { display: flex; }
 }
 
