@@ -7,7 +7,7 @@ Ligger i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en
 
 ## Pris og forudbestilling
 - `CONFIG` i `assets/js/main.js`: introduktionspris 1.495 kr. til og med 14. nov. 2026, derefter 1.795 kr. (skifter automatisk).
-- Antalsvælger 1–5. Submit sender eventet `skibby:add-to-cart` med `{ qty }` — checkout (Revolut) er ikke koblet på endnu.
+- Antalsvælger uden grænse pr. ordre (kun oplaget på 500 sætter loftet). Submit sender eventet `skibby:add-to-cart` med `{ qty }` — checkout (Revolut) er ikke koblet på endnu.
 - Jesper-citat markeret med rød `[...]` i `index.html`.
 
 ## Palette

@@ -5,7 +5,7 @@
     introPrice: 1495,
     regularPrice: 1795,
     introUntil: new Date('2026-11-15T00:00:00+01:00'),
-    maxPerOrder: 5,
+    edition: 500,   // ingen grænse pr. ordre; kun oplaget sætter loftet
   };
   const isIntro = Date.now() < CONFIG.introUntil.getTime();
   const unitPrice = isIntro ? CONFIG.introPrice : CONFIG.regularPrice;
@@ -29,11 +29,9 @@
   const input = $('#qty');
   const minus = form.querySelector('[data-step="-1"]');
   const plus = form.querySelector('[data-step="1"]');
-  const hint = $('#qty-hint');
-  const max = CONFIG.maxPerOrder;
+  const max = CONFIG.edition;
 
   input.max = String(max);
-  $('#qty-max').textContent = max;
   document.querySelectorAll('#unit-price, #sticky-price, [data-price="unit"]')
     .forEach((el) => { el.textContent = fmt(unitPrice); });
   if (!isIntro) {
@@ -49,7 +47,6 @@
     input.value = q;
     minus.disabled = q <= 1;
     plus.disabled = q >= max;
-    hint.classList.toggle('is-max', q >= max);
     $('#total-price').textContent = fmt(q * unitPrice);
   };
 

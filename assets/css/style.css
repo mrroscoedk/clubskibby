@@ -681,8 +681,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 .qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .qty-total { margin: 0; color: var(--ink-soft); }
 .qty-total strong { color: var(--ink); font-family: var(--font-serif); font-weight: 400; font-size: 28px; margin-left: 6px; }
-.qty-hint { font-size: 13px; color: var(--steel); margin: 10px 0 18px; }
-.qty-hint.is-max { color: var(--gold-ink); }
+.qty-row { margin-bottom: 20px; }
 .qty-form.is-added .btn { background: var(--stone); }
 
 .usps {
