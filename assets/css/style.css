@@ -94,13 +94,6 @@ p { margin: 0 0 1em; }
   letter-spacing: .16em;
 }
 
-.dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 0 3px rgba(192, 151, 74, .22);
-}
-
 /* Sektionsnummer som et timeindeks: guldbaton + tal */
 .section-no {
   display: inline-flex;
