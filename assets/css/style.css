@@ -244,7 +244,7 @@ p { margin: 0 0 1em; }
 /* Header ------------------------------------------------------------- */
 .site-header {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 50;
   background: rgba(244, 243, 238, .86);
   backdrop-filter: blur(10px);
@@ -750,7 +750,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 .sticky-buy {
   backdrop-filter: blur(10px);
   position: fixed;
-  left: 12px; right: 12px; bottom: 12px;
+  left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   z-index: 60;
   display: none;
   align-items: center;
@@ -768,8 +768,9 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 .sticky-buy.is-visible { transform: none; }
 
 /* Reveal ------------------------------------------------------------- */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
-.reveal.is-visible { opacity: 1; transform: none; }
+/* Indholdet er synligt fra start; kun en let glidning når det kommer i view */
+.reveal { transform: translateY(14px); transition: transform .9s var(--ease); }
+.reveal.is-visible { transform: none; }
 
 /* Responsivt --------------------------------------------------------- */
 @media (max-width: 1024px) {
@@ -800,6 +801,6 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .reveal { opacity: 1; transform: none; }
+  .reveal { transform: none; }
   .stage-line { stroke-dashoffset: 0; }
 }
