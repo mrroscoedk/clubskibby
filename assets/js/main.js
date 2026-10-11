@@ -36,7 +36,7 @@
     .forEach((el) => { el.textContent = fmt(unitPrice); });
   if (!isIntro) {
     $('#regular-price').remove();
-    $('#price-note').textContent = 'Pris inkl. moms. Forventet levering 25. januar 2027.';
+    $('#price-note').textContent = 'Pris inkl. moms. Forventet afsendelse 25. januar 2027.';
     document.querySelector('.hero-facts dt').textContent = 'Pris';
   }
 
