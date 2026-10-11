@@ -207,7 +207,7 @@ p { margin: 0 0 1em; }
 .gallery .ph:hover img { transform: scale(1.03); }
 .ph img.is-missing { display: none; }
 .ph-portrait { aspect-ratio: 7 / 10; }
-.ph-ride img { object-position: 40% 22%; }
+.ph-front img { object-position: 50% 45%; }
 .ph .tag {
   position: absolute;
   z-index: 3;
