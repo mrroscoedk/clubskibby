@@ -171,11 +171,8 @@ p { margin: 0 0 1em; }
   filter: saturate(.92) contrast(1.03);
 }
 .ph img.is-missing { display: none; }
-/* Billede med uret lagt ind på håndleddet — samme format som basisbilledet */
-.ph img.overlay { position: absolute; inset: 0; z-index: 2; }
 .ph-portrait { aspect-ratio: 7 / 10; }
-.ph-zoom img { transform: scale(2.1); transform-origin: 50% 38%; }
-.ph-ride img { object-position: 50% 30%; }
+.ph-ride img { object-position: 40% 22%; }
 .ph .tag {
   position: absolute;
   z-index: 3;
@@ -415,11 +412,12 @@ blockquote cite { font-style: normal; font-family: var(--font-mono); font-size: 
 .gallery {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: 14px;
+  aspect-ratio: 16 / 10;
 }
-.gallery .ph-wide { grid-row: span 2; aspect-ratio: auto; min-height: 100%; }
-.gallery .ph:not(.ph-wide) { aspect-ratio: 4 / 3; }
+.gallery .ph { aspect-ratio: auto; height: 100%; }
+.gallery .ph-wide { grid-row: span 2; }
 
 .specs {
   display: grid;
@@ -663,8 +661,9 @@ blockquote cite { font-style: normal; font-family: var(--font-mono); font-size: 
   .peak { font-size: 10px; padding: 0 3px; }
   .peak:nth-of-type(odd) { translate: -50% -115%; }
   .section-head { grid-template-columns: 1fr; }
-  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-  .gallery .ph-wide { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 3; }
+  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; aspect-ratio: auto; }
+  .gallery .ph { aspect-ratio: 3 / 4; height: auto; }
+  .gallery .ph-wide { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 5; }
   .specs { grid-template-columns: 1fr; }
   .buy-media { position: static; margin-left: 10px; }
   .buy-media .ph { box-shadow: -10px 10px 0 var(--ink); }

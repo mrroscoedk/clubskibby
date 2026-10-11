@@ -3,7 +3,7 @@
 Statisk landingsside (HTML/CSS/JS, ingen build). Åbn `index.html` direkte i browseren.
 
 ## Billeder
-Samme filnavne som på skibbyur.dk — læg dem i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en stribet pladsholder med filnavnet. `*-ur-rettet.png` er overlays, der lægges oven på pressebillederne, så uret sidder på Jespers håndled.
+Ligger i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en stribet pladsholder med filnavnet.
 
 ## Pris og forudbestilling
 - `CONFIG` i `assets/js/main.js`: introduktionspris 1.495 kr. til og med 14. nov. 2026, derefter 1.795 kr. (skifter automatisk).
