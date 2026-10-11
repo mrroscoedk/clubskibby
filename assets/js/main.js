@@ -1,12 +1,14 @@
 /* Skibby Watch — skibbyclub.dk */
 (() => {
-  // Butiksopsætning. Pris og lager er pladsholdere, til checkout er koblet på.
+  // Priser i DKK inkl. moms. Introprisen gælder til og med introUntil.
   const CONFIG = {
-    unitPrice: 0,      // TODO: pris i DKK inkl. moms
+    introPrice: 1495,
+    regularPrice: 1795,
+    introUntil: new Date('2026-11-15T00:00:00+01:00'),
     maxPerOrder: 5,
-    edition: 500,
-    left: 500,         // TODO: hentes fra lager/checkout
   };
+  const isIntro = Date.now() < CONFIG.introUntil.getTime();
+  const unitPrice = isIntro ? CONFIG.introPrice : CONFIG.regularPrice;
 
   const fmt = (n) =>
     n > 0
@@ -28,13 +30,17 @@
   const minus = form.querySelector('[data-step="-1"]');
   const plus = form.querySelector('[data-step="1"]');
   const hint = $('#qty-hint');
-  const max = Math.min(CONFIG.maxPerOrder, CONFIG.left);
+  const max = CONFIG.maxPerOrder;
 
   input.max = String(max);
   $('#qty-max').textContent = max;
-  $('#stock-left').textContent = CONFIG.left;
-  $('#unit-price').textContent = fmt(CONFIG.unitPrice);
-  $('#sticky-price').textContent = fmt(CONFIG.unitPrice);
+  document.querySelectorAll('#unit-price, #sticky-price, [data-price="unit"]')
+    .forEach((el) => { el.textContent = fmt(unitPrice); });
+  if (!isIntro) {
+    $('#regular-price').remove();
+    $('#price-note').textContent = 'Pris inkl. moms. Forventet levering 3–4 måneder.';
+    document.querySelector('.hero-facts dt').textContent = 'Pris';
+  }
 
   const clamp = (v) => Math.max(1, Math.min(max, Number.isFinite(v) ? Math.round(v) : 1));
 
@@ -44,7 +50,7 @@
     minus.disabled = q <= 1;
     plus.disabled = q >= max;
     hint.classList.toggle('is-max', q >= max);
-    $('#total-price').textContent = fmt(q * CONFIG.unitPrice);
+    $('#total-price').textContent = fmt(q * unitPrice);
   };
 
   form.querySelectorAll('.qty-btn').forEach((btn) =>
@@ -59,15 +65,14 @@
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const qty = clamp(parseInt(input.value, 10));
-    // TODO: kobl på checkout (fx Shopify / Stripe) med `qty`.
+    // TODO: kobl på checkout (Revolut) med `qty`.
     document.dispatchEvent(new CustomEvent('skibby:add-to-cart', { detail: { qty } }));
-    const btn = form.querySelector('[type="submit"]');
-    const label = btn.firstChild;
+    const label = form.querySelector('.btn-label');
     form.classList.add('is-added');
-    label.textContent = `${qty} lagt i kurven `;
+    label.textContent = `${qty} ${qty === 1 ? 'ur' : 'ure'} valgt`;
     setTimeout(() => {
       form.classList.remove('is-added');
-      label.textContent = 'Læg i kurv ';
+      label.textContent = 'Forudbestil';
     }, 2200);
   });
 

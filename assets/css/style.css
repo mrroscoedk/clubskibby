@@ -171,6 +171,24 @@ p { margin: 0 0 1em; }
   filter: saturate(.92) contrast(1.03);
 }
 .ph img.is-missing { display: none; }
+/* Billede med uret lagt ind på håndleddet — samme format som basisbilledet */
+.ph img.overlay { position: absolute; inset: 0; z-index: 2; }
+.ph-portrait { aspect-ratio: 7 / 10; }
+.ph-zoom img { transform: scale(2.1); transform-origin: 50% 38%; }
+.ph-ride img { object-position: 50% 30%; }
+.ph .tag {
+  position: absolute;
+  z-index: 3;
+  left: 12px; top: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  transform: rotate(-1.5deg);
+}
 .ph-tall { aspect-ratio: 4 / 5; }
 .ph-square { aspect-ratio: 1; }
 .ph-wide { aspect-ratio: 16 / 10; }
@@ -289,7 +307,29 @@ p { margin: 0 0 1em; }
 
 /* Etapeprofil -------------------------------------------------------- */
 .stage { margin-top: clamp(40px, 6vw, 72px); }
-.stage svg { display: block; width: 100%; height: clamp(56px, 8vw, 110px); }
+.stage-plot { position: relative; padding-top: 28px; }
+.stage svg { display: block; width: 100%; height: clamp(64px, 9vw, 120px); }
+.peak {
+  position: absolute;
+  left: var(--x);
+  top: calc(28px + var(--y) * .9);
+  translate: -50% -130%;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--clay);
+  background: var(--paper);
+  padding: 1px 6px;
+  border: 1.5px solid var(--clay);
+  white-space: nowrap;
+}
+.peak::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 100%;
+  width: 1.5px; height: 10px;
+  background: var(--clay);
+}
 .stage-fill { fill: var(--paper-2); }
 .stage-line {
   fill: none;
@@ -470,13 +510,16 @@ blockquote cite { font-style: normal; font-family: var(--font-mono); font-size: 
   clip-path: polygon(2% 8%, 98% 0, 100% 92%, 0 100%);
 }
 .buy-panel h2 { font-size: clamp(32px, 3.6vw, 48px); margin-bottom: 1rem; }
-.buy-panel h2 span { color: var(--fjord); font-weight: 600; font-stretch: 85%; text-transform: none; font-size: .56em; letter-spacing: 0; }
+.variant { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .04em; color: var(--ink-soft); margin: -.4rem 0 1.2rem; }
+.buy-panel h2 span { display: block; margin-top: .3em; line-height: 1.15; color: var(--fjord); font-weight: 600; font-stretch: 85%; text-transform: none; font-size: .56em; letter-spacing: 0; }
 .price {
   font-size: 30px;
   font-weight: 700;
   font-stretch: 85%;
   margin-bottom: 1.6rem;
 }
+.price s { font-size: 18px; font-weight: 500; color: var(--fjord); margin-left: 6px; }
+.price-note { font-size: 13.5px; color: var(--clay); margin: -1rem 0 1.4rem; }
 .price small { font-size: 13px; font-weight: 400; color: var(--fjord); font-family: var(--font-mono); }
 
 .qty-form { padding-top: 1.4rem; border-top: 1px dashed rgba(27,28,30,.3); }
@@ -617,7 +660,8 @@ blockquote cite { font-style: normal; font-family: var(--font-mono); font-size: 
   .stamp-wheel { width: 36px; height: 36px; }
   .hero-facts { gap: 0 22px; }
   .hero-facts dd { font-size: 17px; }
-  .stage-labels span:nth-child(2) { display: none; }
+  .peak { font-size: 10px; padding: 0 3px; }
+  .peak:nth-of-type(odd) { translate: -50% -115%; }
   .section-head { grid-template-columns: 1fr; }
   .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
   .gallery .ph-wide { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 3; }

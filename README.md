@@ -2,22 +2,13 @@
 
 Statisk landingsside (HTML/CSS/JS, ingen build). Åbn `index.html` direkte i browseren.
 
-## Billeder (placeholders)
-Læg billederne fra skibbyur.dk i `assets/img/` med disse navne. Mangler et billede, vises en stribet pladsholder med filnavnet.
+## Billeder
+Samme filnavne som på skibbyur.dk — læg dem i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en stribet pladsholder med filnavnet. `*-ur-rettet.png` er overlays, der lægges oven på pressebillederne, så uret sidder på Jespers håndled.
 
-| Fil | Bruges til |
-| --- | --- |
-| `hero.jpg` | Hovedbillede i toppen (4:5 / 1:1 på mobil) |
-| `jesper.jpg` | Jesper Skibby i historie-sektionen (vises i sort/hvid) |
-| `detail-1.jpg` | Urskive tæt på (stort galleribillede) |
-| `detail-2.jpg` | Bagside / gravering |
-| `detail-3.jpg` | På håndleddet |
-| `product.jpg` | Produktbillede ved køb (1:1) |
-
-## Mangler / skal bekræftes
-- Pris og lager: `CONFIG` i `assets/js/main.js` (`unitPrice`, `left`, `maxPerOrder`).
-- Checkout: formularen sender eventet `skibby:add-to-cart` med `{ qty }` — kobles på Shopify/Stripe.
-- Specs, leveringstid, Jesper-citat og USP'er markeret med rød `[...]` i `index.html`.
+## Pris og forudbestilling
+- `CONFIG` i `assets/js/main.js`: introduktionspris 1.495 kr. til og med 14. nov. 2026, derefter 1.795 kr. (skifter automatisk).
+- Antalsvælger 1–5. Submit sender eventet `skibby:add-to-cart` med `{ qty }` — checkout (Revolut) er ikke koblet på endnu.
+- Jesper-citat markeret med rød `[...]` i `index.html`.
 
 ## Palette
 | Token | Hex | |
