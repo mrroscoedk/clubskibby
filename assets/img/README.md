@@ -7,4 +7,3 @@ Billeder (placeholders, skaleret til web):
 - uret-forfra.jpeg — produktbillede af uret forfra på hvid baggrund.
 
 Pressebilleder/skærmbilleder skal rettighedsafklares før lancering.
-- detalje-skive.webp, detalje-krone.webp, detalje-bagside.webp — nærbilleder af det fysiske ur (skive, krone, bagside).
