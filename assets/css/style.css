@@ -546,6 +546,45 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 }
 .spec p { margin: 0; font-family: var(--font-serif); font-size: 21px; line-height: 1.2; }
 
+/* Tekniske data: som et datablad, to kolonner med hårfine linjer */
+.tech {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 8px clamp(24px, 4vw, 56px);
+  margin-top: clamp(40px, 6vw, 72px);
+}
+.tech-title {
+  font-family: var(--font-label);
+  font-stretch: 118%;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+  padding-top: 14px;
+}
+.tech-list { margin: 0; }
+.tech-list div {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.tech-list div:first-child { border-top: 1px solid var(--ink); }
+.tech-list dt {
+  font-family: var(--font-label);
+  font-stretch: 118%;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--steel);
+  padding-top: 4px;
+}
+.tech-list dd { margin: 0; font-size: 15px; min-width: 0; font-variant-numeric: tabular-nums; }
+.tech-note { grid-column: 2; font-size: 12.5px; color: var(--steel); margin: 6px 0 0; }
+
 /* Tal-bånd ----------------------------------------------------------- */
 .numberband {
   background: var(--stone);
@@ -789,6 +828,9 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   .gallery .ph { aspect-ratio: 3 / 4; height: auto; }
   .gallery .ph-wide { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 5; }
   .specs { grid-template-columns: 1fr; }
+  .tech { grid-template-columns: 1fr; }
+  .tech-note { grid-column: 1; }
+  .tech-list div { grid-template-columns: 1fr; gap: 2px; }
   .buy-media { position: static; margin-left: 10px; }
   .sticky-buy { display: flex; }
 }
