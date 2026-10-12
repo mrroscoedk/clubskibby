@@ -208,6 +208,7 @@ p { margin: 0 0 1em; }
 .ph img.is-missing { display: none; }
 .ph-portrait { aspect-ratio: 7 / 10; }
 .ph-front img { object-position: 50% 45%; }
+.ph-env img { object-position: 45% 55%; }
 .ph .tag {
   position: absolute;
   z-index: 3;
