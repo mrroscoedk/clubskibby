@@ -59,6 +59,7 @@
         });
         const json = await res.json().catch(() => ({}));
         if (!res.ok || !json.ok) throw new Error(json.error || res.status);
+        try { window.va && window.va('event', { name: 'Foredrag forespurgt', data: { kunde: $('#t-order').value ? 'ja' : 'nej' } }); } catch {}
         status.textContent = 'Tak. Vi kontakter dig om et foredrag med Jesper.';
         form.querySelectorAll('input, button').forEach((el) => { el.disabled = true; });
       } else {

@@ -45,6 +45,8 @@ Custom events (kræver Pro-plan) sendes fra `assets/js/main.js` via `track()`:
 - `Bestil klik` – klik på en Bestil-knap, `placering`: header / hero / mobilbar
 - `Bestilling startet` – "Bestil som virksomhed" foldes ud, med `antal`
 - `Bestilling sendt` – bestillingen er gemt, med `antal`
+- `Venteliste tilmeldt` – tilmelding til ventelisten er gemt
+- `Foredrag forespurgt` – forespørgsel sendt fra kvitteringssiden (`assets/js/tak.js`), `kunde`: ja hvis den kommer lige efter en bestilling
 
 ## Palette
 | Token | Hex | |

@@ -284,7 +284,7 @@
     status.textContent = sent
       ? 'Du er på listen. Vi skriver, så snart der åbnes for privatpersoner.'
       : 'Preview: tilmeldingen er ikke gemt, fordi formularen endnu ikke er koblet til en modtager.';
-    if (sent) $('#waitlist-form').reset();
+    if (sent) { track('Venteliste tilmeldt'); $('#waitlist-form').reset(); }
   });
 
   // Reveal + etapeprofil
