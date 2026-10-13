@@ -9,7 +9,7 @@
     edition: 500,       // ingen grænse pr. ordre; kun oplaget sætter loftet
     // Webadressen på Google Apps Script-webappen, der skriver i Google Sheet.
     // Se google-sheets/README.md. Tom = preview: intet sendes, og det står i beskeden.
-    sheetsUrl: '',
+    sheetsUrl: 'https://script.google.com/a/macros/idealventures.dk/s/AKfycbztOCtY6sI0ulYm_g5zn0PIaaVR9pu7sb6N4BZl4Tuobq9PYJTd_I0F5Pnsgw3DmaeW3Q/exec',
     // Opslag i CVR-registeret via cvrapi.dk (gratis, begrænset antal opslag pr. dag).
     // Sæt token, hvis I køber et abonnement hos cvrapi.dk.
     cvr: { url: 'https://cvrapi.dk/api', token: '' },
