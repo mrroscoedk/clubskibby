@@ -1,4 +1,4 @@
-// Vercel-funktion: modtager formularerne fra skibbyclub.dk.
+// Vercel-funktion: modtager formularerne fra skibbywatch.dk.
 // 1) gemmer i Google Sheet (via Apps Script-webappen)
 // 2) sender mails via Resend:
 //    - erhvervsbestilling: ordrebekræftelse til kunden + besked om ny ordre internt
@@ -8,7 +8,7 @@
 // Miljøvariabler (Vercel → Settings → Environment Variables):
 //   SHEETS_URL         Apps Script-webappens /exec-adresse
 //   RESEND_API_KEY     API-nøgle fra resend.com
-//   MAIL_FROM          afsender, fx "Skibby Watch <ordre@skibbyclub.dk>" (domænet skal være verificeret i Resend)
+//   MAIL_FROM          afsender, fx "Skibby Watch <ordre@skibbywatch.dk>" (domænet skal være verificeret i Resend)
 //   MAIL_REPLY_TO      (valgfri) svar-adresse på ordrebekræftelsen, fx jesper@skibbyur.dk
 //   ORDER_NOTIFY_TO    modtager(e) af "ny ordre", kommasepareret
 //   TALK_NOTIFY_TO     modtager(e) af foredragsforespørgsler, kommasepareret (falder tilbage til ORDER_NOTIFY_TO)
@@ -66,7 +66,7 @@ const layout = (body) => `<!doctype html><html lang="da"><body style="margin:0;b
 <p style="margin:0 0 24px;font-size:12px;letter-spacing:.3em;text-transform:uppercase">Skibby <b>Watch</b></p>
 ${body}
 </td></tr></table>
-<p style="font-size:12px;color:#676C70;margin:16px 0 0">Skibby Watch · Limited First Edition · skibbyclub.dk</p>
+<p style="font-size:12px;color:#676C70;margin:16px 0 0">Skibby Watch · Limited First Edition · skibbywatch.dk</p>
 </td></tr></table></body></html>`;
 
 const rowsHtml = (rows) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;border-top:1px solid #E9E8E1">

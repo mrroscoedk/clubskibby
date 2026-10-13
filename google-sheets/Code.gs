@@ -1,7 +1,7 @@
 /**
  * @OnlyCurrentDoc
  *
- * Skibby Watch – modtager formularer fra skibbyclub.dk og skriver dem i dette Google Sheet.
+ * Skibby Watch – modtager formularer fra skibbywatch.dk og skriver dem i dette Google Sheet.
  * Hver formular får sin egen fane: "venteliste" og "erhvervsbestilling".
  * Scriptet kan kun skrive i dette ene ark og sender ingen mails.
  *

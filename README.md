@@ -1,4 +1,4 @@
-# skibbyclub.dk — Skibby Watch Limited First Edition
+# skibbywatch.dk — Skibby Watch Limited First Edition
 
 Statisk landingsside (HTML/CSS/JS, ingen build). Åbn `index.html` direkte i browseren.
 
@@ -24,12 +24,12 @@ Ligger i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en
 | `foredrag` | Forespørgsel til `TALK_NOTIFY_TO` |
 | `venteliste` | Ingen mail |
 
-1. Opret en gratis konto på resend.com, og verificér domænet `skibbyclub.dk` (Resend viser de DNS-poster, der skal tilføjes).
+1. Opret en gratis konto på resend.com, og verificér domænet `skibbywatch.dk` (Resend viser de DNS-poster, der skal tilføjes).
 2. Opret en API-nøgle i Resend.
 3. Sæt miljøvariablerne i Vercel → Project → Settings → Environment Variables:
    - `SHEETS_URL` – Apps Script-webappens `/exec`-adresse
    - `RESEND_API_KEY` – nøglen fra trin 2
-   - `MAIL_FROM` – fx `Skibby Watch <ordre@skibbyclub.dk>`
+   - `MAIL_FROM` – fx `Skibby Watch <ordre@skibbywatch.dk>`
    - `MAIL_REPLY_TO` – hvor kundens svar skal hen, fx `jesper@skibbyur.dk`
    - `ORDER_NOTIFY_TO` – hvem får "ny ordre" (flere adresser adskilles med komma)
    - `TALK_NOTIFY_TO` – hvem får foredragsforespørgsler

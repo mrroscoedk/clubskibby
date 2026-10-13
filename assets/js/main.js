@@ -1,4 +1,4 @@
-/* Skibby Watch — skibbyclub.dk */
+/* Skibby Watch — skibbywatch.dk */
 (() => {
   // Priser i DKK inkl. moms. Introprisen gælder til og med introUntil.
   const CONFIG = {
