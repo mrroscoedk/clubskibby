@@ -8,3 +8,4 @@ Billeder (placeholders, skaleret til web):
 
 Pressebilleder/skærmbilleder skal rettighedsafklares før lancering.
 - rigtig-ur.webp, rigtig-skive.webp, rigtig-profil.webp — fotos af det godkendte ur (kun lys/farvebalance, beskæring og rotation justeret).
+- mail-uret.jpg — bredformat-udsnit af produktfotoet til ordrebekræftelsen (JPEG, da Outlook ikke viser WebP), med "AI-genereret" i hjørnet.

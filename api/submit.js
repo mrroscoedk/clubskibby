@@ -12,6 +12,9 @@
 //   MAIL_REPLY_TO      (valgfri) svar-adresse på ordrebekræftelsen, fx info@skibbywatch.dk
 //   ORDER_NOTIFY_TO    modtager(e) af "ny ordre", kommasepareret
 //   TALK_NOTIFY_TO     modtager(e) af foredragsforespørgsler, kommasepareret (falder tilbage til ORDER_NOTIFY_TO)
+//   SITE_URL           (valgfri) sitets adresse til billeder i mails, fx https://skibbywatch.dk
+
+const mail = require('./_mail');
 
 const PRICE = { intro: 1495, regular: 1795, introUntil: Date.parse('2026-11-15T00:00:00+01:00'), vat: 0.25 };
 const SHIP_DATE = '25. januar 2027';
@@ -24,8 +27,6 @@ const FORMS = {
   foredrag: { required: ['kontaktperson', 'email'] },
 };
 
-const kr = (n) => `${Math.round(n).toLocaleString('da-DK')} kr.`;
-const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const list = (v) => String(v || '').split(',').map((s) => s.trim()).filter(Boolean);
 const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || ''));
 
@@ -58,21 +59,6 @@ async function sendMail({ to, subject, html, text, replyTo }) {
   if (!res.ok) throw new Error(`Resend: ${res.status} ${(await res.text()).slice(0, 200)}`);
   return true;
 }
-
-// Fælles, enkel mail-skabelon i sidens farver
-const layout = (body) => `<!doctype html><html lang="da"><body style="margin:0;background:#F4F3EE;font-family:Helvetica,Arial,sans-serif;color:#1D1D1B">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px">
-<table role="presentation" width="100%" style="max-width:560px;background:#ffffff;border-top:2px solid #C0974A" cellpadding="0" cellspacing="0"><tr><td style="padding:32px 28px">
-<p style="margin:0 0 24px;font-size:12px;letter-spacing:.3em;text-transform:uppercase">Skibby <b>Watch</b></p>
-${body}
-</td></tr></table>
-<p style="font-size:12px;color:#676C70;margin:16px 0 0">Skibby Watch · Limited First Edition · skibbywatch.dk</p>
-</td></tr></table></body></html>`;
-
-const rowsHtml = (rows) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;border-top:1px solid #E9E8E1">
-${rows.map(([k, v]) => `<tr><td style="padding:8px 0;color:#676C70;border-bottom:1px solid #E9E8E1;width:40%">${esc(k)}</td><td style="padding:8px 0;border-bottom:1px solid #E9E8E1">${esc(v)}</td></tr>`).join('')}
-</table>`;
-const rowsText = (rows) => rows.map(([k, v]) => `${k}: ${v}`).join('\n');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Kun POST' });
@@ -116,67 +102,21 @@ module.exports = async (req, res) => {
   }
 
   // Mails: en fejl her må ikke få kunden til at bestille igen, så den logges kun.
+  const site = (process.env.SITE_URL || `https://${req.headers.host || 'skibbywatch.dk'}`).replace(/\/$/, '');
   const mails = [];
   try {
     if (form === 'erhvervsbestilling') {
-      const delivery = data.anden_leveringsadresse
-        ? [data.levering_att, data.levering_adresse, `${data.levering_postnr} ${data.levering_by}`].filter(Boolean).join(', ')
-        : `${data.adresse}, ${data.postnr} ${data.by}`;
-      const summary = [
-        ['Ordrenummer', order.number],
-        ['Antal', `${order.qty} × Skibby Watch Limited First Edition`],
-        ['Pris pr. stk.', `${kr(order.unit)} inkl. moms`],
-        ['I alt', `${kr(order.total)} inkl. moms (${kr(order.totalEx)} ekskl. moms)`],
-        ['Virksomhed', `${data.firmanavn}, CVR ${data.cvr}${data.ean ? `, EAN ${data.ean}` : ''}`],
-        ['Levering', delivery],
-        ['Betaling', 'Faktura'],
-        ['Forventet afsendelse', `${SHIP_DATE} (planlagt)`],
-      ];
-
-      mails.push(sendMail({
-        to: [data.email],
-        replyTo: process.env.MAIL_REPLY_TO,
-        subject: `Ordrebekræftelse ${order.number} – Skibby Watch`,
-        html: layout(`<h1 style="font-family:Georgia,serif;font-weight:400;font-size:28px;margin:0 0 12px">Tak for bestillingen, ${esc(data.kontaktperson)}.</h1>
-<p style="font-size:15px;line-height:1.6;margin:0 0 24px">Vi har modtaget jeres bestilling på ${order.qty} ${order.qty === 1 ? 'ur' : 'ure'} fra første udgave. Fakturaen sendes til denne e-mail, når bestillingen er bekræftet.</p>
-${rowsHtml(summary)}
-<p style="font-size:15px;line-height:1.6;margin:24px 0 0">Har I spørgsmål, så svar bare på denne mail.</p>`),
-        text: `Tak for bestillingen, ${data.kontaktperson}.\n\nVi har modtaget jeres bestilling. Fakturaen sendes til denne e-mail, når bestillingen er bekræftet.\n\n${rowsText(summary)}\n\nHar I spørgsmål, så svar bare på denne mail.`,
-      }));
-
-      const internal = summary.concat([
-        ['Kontaktperson', data.kontaktperson],
-        ['E-mail', data.email],
-        ['Telefon', data.telefon],
-        ['Firmaadresse', `${data.adresse}, ${data.postnr} ${data.by}`],
-      ]);
-      mails.push(sendMail({
-        to: list(process.env.ORDER_NOTIFY_TO),
-        replyTo: data.email,
-        subject: `Ny ordre ${order.number}: ${order.qty} stk. – ${data.firmanavn}`,
-        html: layout(`<h1 style="font-size:20px;margin:0 0 16px">Ny erhvervsbestilling</h1>${rowsHtml(internal)}`),
-        text: `Ny erhvervsbestilling\n\n${rowsText(internal)}`,
-      }));
+      const confirmation = mail.customerOrder({ data, order, site, shipDate: SHIP_DATE });
+      mails.push(sendMail({ to: [data.email], replyTo: process.env.MAIL_REPLY_TO, ...confirmation }));
+      const notify = mail.internalOrder({ data, order, site, shipDate: SHIP_DATE });
+      mails.push(sendMail({ to: list(process.env.ORDER_NOTIFY_TO), replyTo: data.email, ...notify }));
     }
-
     if (form === 'foredrag') {
-      const rows = [
-        ['Virksomhed', data.firmanavn || '–'],
-        ['Kontaktperson', data.kontaktperson],
-        ['E-mail', data.email],
-        ['Telefon', data.telefon || '–'],
-        ['Ordrenummer', data.ordrenummer || '–'],
-        ['Besked', data.besked || '–'],
-      ];
-      mails.push(sendMail({
-        to: list(process.env.TALK_NOTIFY_TO || process.env.ORDER_NOTIFY_TO),
-        replyTo: data.email,
-        subject: `Foredragsforespørgsel – ${data.firmanavn || data.kontaktperson}`,
-        html: layout(`<h1 style="font-size:20px;margin:0 0 16px">Ny forespørgsel på foredrag med Jesper</h1>${rowsHtml(rows)}`),
-        text: `Ny forespørgsel på foredrag med Jesper\n\n${rowsText(rows)}`,
-      }));
+      const notify = mail.internalTalk({ data, site });
+      mails.push(sendMail({ to: list(process.env.TALK_NOTIFY_TO || process.env.ORDER_NOTIFY_TO), replyTo: data.email, ...notify }));
     }
-    await Promise.all(mails);
+    const results = await Promise.allSettled(mails);
+    results.filter((r) => r.status === 'rejected').forEach((r) => console.error('Mail fejlede:', r.reason));
   } catch (err) {
     console.error('Mail fejlede:', err);
   }
