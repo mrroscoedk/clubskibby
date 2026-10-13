@@ -50,11 +50,13 @@ function frame({ preheader, site, body }) {
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
         <td style="font-family:${SANS};font-size:13px;line-height:20px;color:#E4E2DA">
           <b style="color:#FFFFFF">Skibby Watch</b> · Limited First Edition<br>
-          <span style="color:#C4C7C7">En del af Klub Skibby</span>
+          <span style="color:#C4C7C7">En del af Klub Skibby</span><br>
+          <span style="color:#9A9E9E;font-size:11px">Skibby v/ Jesper Skibby · CVR 30022076 · Møllegade 6B, 3250 Gilleleje</span>
         </td>
         <td align="right" style="font-family:${SANS};font-size:12px;line-height:20px;color:#C4C7C7">
           <a href="${esc(site)}" style="color:#D9B977;text-decoration:none">skibbywatch.dk</a><br>
-          <a href="mailto:info@skibbywatch.dk" style="color:#C4C7C7;text-decoration:none">info@skibbywatch.dk</a>
+          <a href="mailto:info@skibbywatch.dk" style="color:#C4C7C7;text-decoration:none">info@skibbywatch.dk</a><br>
+          <a href="${esc(site)}/handelsbetingelser.html" style="color:#C4C7C7;text-decoration:underline">Handelsbetingelser</a>
         </td>
       </tr></table>
     </td></tr>

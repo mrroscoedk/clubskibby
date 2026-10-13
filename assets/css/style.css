@@ -990,6 +990,34 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 .talk-form .form-status.is-ok { background: rgba(217, 185, 119, .16); color: var(--paper); }
 .talk-form .form-status.is-error, .talk-form .err { color: #F0B4A6; }
 
+/* Juridiske sider ---------------------------------------------------- */
+.legal { padding: clamp(48px, 7vw, 96px) 0 clamp(64px, 9vw, 120px); }
+.legal-grid { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(32px, 6vw, 88px); align-items: start; }
+.legal-aside { position: sticky; top: 104px; }
+.legal-toc { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: toc; }
+.legal-toc li { counter-increment: toc; font-size: 13.5px; }
+.legal-toc a { text-decoration: none; color: var(--ink-soft); display: grid; grid-template-columns: 26px 1fr; }
+.legal-toc a::before { content: counter(toc, decimal-leading-zero); font-family: var(--font-mono); font-size: 11px; color: var(--gold-ink); padding-top: 2px; }
+.legal-toc a:hover { color: var(--ink); }
+.legal-body { max-width: 44em; }
+.legal-body h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(44px, 5.5vw, 72px); line-height: 1; margin-bottom: 2.2rem; }
+.legal-body section { padding: 26px 0 10px; border-top: 1px solid var(--line); scroll-margin-top: 96px; }
+.legal-body h2 {
+  display: flex; gap: 14px; align-items: baseline;
+  font-size: 15px; font-stretch: 112%; letter-spacing: .06em; margin-bottom: 1rem;
+}
+.legal-body h2 span { font-family: var(--font-mono); font-size: 12px; color: var(--gold-ink); letter-spacing: 0; }
+.legal-body p, .legal-body li { font-size: 15.5px; line-height: 1.7; color: var(--ink-soft); }
+.legal-body ul { padding-left: 1.2em; margin: 0 0 1em; }
+.legal-body li { margin-bottom: .4em; }
+.legal-body strong { color: var(--ink); font-weight: 600; }
+.legal-body a { text-decoration-color: var(--gold); text-underline-offset: 3px; }
+.table-wrap { overflow-x: auto; margin: 0 0 1em; }
+.legal-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 14px; }
+.legal-table th { text-align: left; font: 600 10px/1.4 var(--font-label); font-stretch: 118%; letter-spacing: .16em; text-transform: uppercase; color: var(--steel); padding: 10px 12px 10px 0; border-bottom: 1px solid var(--ink); }
+.legal-table td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-soft); line-height: 1.5; }
+.legal-table td:first-child { color: var(--ink); }
+
 /* Responsivt --------------------------------------------------------- */
 @media (max-width: 1024px) {
   .specs { grid-template-columns: repeat(2, 1fr); }
@@ -1015,6 +1043,10 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   .gallery .ph-wide { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 5; }
   .specs { grid-template-columns: 1fr; }
   .thanks-grid, .talk-grid { grid-template-columns: 1fr; }
+  .legal-grid { grid-template-columns: 1fr; }
+  .legal-aside { position: static; }
+  .legal-aside nav { display: none; }
+  .legal-aside .eyebrow { margin-bottom: 0; }
   .thanks-media { position: static; max-width: 300px; }
   #order-no { display: block; margin-top: 4px; }
   .receipt div { grid-template-columns: 1fr; gap: 2px; }

@@ -285,7 +285,7 @@
                 <input type="radio" name="betaling" value="faktura" checked>
                 <span><b>Betal med faktura</b> Fakturaen sendes til jeres e-mail, når bestillingen er bekræftet.</span>
               </label>
-              <label class="check" for="terms"><input type="checkbox" id="terms" name="accept_betingelser" required data-error="Accepter handelsbetingelserne for at bestille."><span>Jeg accepterer <a href="#">handelsbetingelserne</a></span></label>
+              <label class="check" for="terms"><input type="checkbox" id="terms" name="accept_betingelser" required data-error="Accepter handelsbetingelserne for at bestille."><span>Jeg accepterer <a href="handelsbetingelser.html" target="_blank" rel="noopener">handelsbetingelserne</a></span></label>
             </fieldset>
 
               <button type="submit" class="btn btn-block"><span class="btn-label">Bestil med faktura</span> <svg class="ic-inline" aria-hidden="true"><use href="#i-wheel"/></svg></button>
@@ -309,7 +309,7 @@
                 <div class="field"><label for="w-name">Navn</label><input id="w-name" name="navn" autocomplete="name" required data-error="Skriv dit navn."></div>
                 <div class="field"><label for="w-email">E-mail</label><input id="w-email" name="email" type="email" autocomplete="email" required data-error="Skriv en gyldig e-mail."></div>
               </div>
-              <label class="check" for="w-consent"><input type="checkbox" id="w-consent" name="samtykke" required data-error="Giv samtykke for at komme på listen."><span>Ja tak, I må sende mig en mail, når der åbnes for privatpersoner.</span></label>
+              <label class="check" for="w-consent"><input type="checkbox" id="w-consent" name="samtykke" required data-error="Giv samtykke for at komme på listen."><span>Ja tak, I må sende mig en mail, når der åbnes for privatpersoner. Læs <a href="privatlivspolitik.html" target="_blank" rel="noopener">privatlivspolitikken</a>.</span></label>
               <button type="submit" class="btn btn-ghost">Skriv mig op</button>
               <p class="form-status" id="waitlist-status" role="status" aria-live="polite"></p>
             </form>
@@ -343,6 +343,10 @@
             <p>Ikke endnu. First edition sælges i første omgang til virksomheder. <a href="#venteliste">Skriv dig på ventelisten</a>, så giver vi besked, når vi åbner for privatpersoner.</p>
           </details>
           <details>
+            <summary>Hvad hvis afsendelsen bliver forsinket?</summary>
+            <p>Den planlagte afsendelse er 25. januar 2027. Bliver produktionen eller fragten forsinket, kan datoen rykkes, og I får besked på mail. Er urene ikke afsendt senest 25. februar 2027, kan I annullere bestillingen uden omkostninger. Læs mere i <a href="handelsbetingelser.html#forsinkelse">handelsbetingelserne</a>.</p>
+          </details>
+          <details>
             <summary>Kan jeg købe flere ure?</summary>
             <p>Ja. Vælg det antal, I har brug for. Der er ingen grænse pr. ordre, så længe der er ure tilbage af de 500.</p>
           </details>
@@ -374,11 +378,11 @@
         <p class="muted">En del af Klub Skibby</p>
       </div>
       <nav class="footer-nav" aria-label="Footer">
-        <a href="#">Handelsbetingelser</a>
-        <a href="#">Privatlivspolitik</a>
+        <a href="handelsbetingelser.html">Handelsbetingelser</a>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
         <a href="mailto:info@skibbywatch.dk">Kontakt</a>
       </nav>
-      <p class="muted small">© 2026 skibbywatch.dk</p>
+      <p class="muted small">Skibby v/ Jesper Skibby · CVR 30022076<br>Møllegade 6B, 3250 Gilleleje<br>© 2026 skibbywatch.dk</p>
     </div>
   </footer>
 
