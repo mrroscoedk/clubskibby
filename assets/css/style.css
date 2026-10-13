@@ -1068,3 +1068,22 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   .reveal { transform: none; }
   .stage-line { stroke-dashoffset: 0; }
 }
+
+/* Cookieboks ---------------------------------------------------------- */
+.cookie-box {
+  position: fixed;
+  left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 70;
+  display: flex; align-items: center; gap: 16px;
+  max-width: 420px;
+  padding: 12px 12px 12px 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+}
+.cookie-box p { margin: 0; font-size: 13px; line-height: 1.45; color: var(--stone); }
+.cookie-box a { color: var(--ink); }
+.cookie-box .btn { flex: none; }
+@media (max-width: 760px) {
+  .cookie-box { left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); max-width: none; }
+}
