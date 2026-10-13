@@ -5,10 +5,14 @@ Statisk landingsside (HTML/CSS/JS, ingen build). Åbn `index.html` direkte i bro
 ## Billeder
 Ligger i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en stribet pladsholder med filnavnet.
 
-## Pris og forudbestilling
-- `CONFIG` i `assets/js/main.js`: introduktionspris 1.495 kr. til og med 14. nov. 2026, derefter 1.795 kr. (skifter automatisk).
-- Antalsvælger uden grænse pr. ordre (kun oplaget på 500 sætter loftet). Submit sender eventet `skibby:add-to-cart` med `{ qty }` — checkout (Revolut) er ikke koblet på endnu.
-- Jesper-citat markeret med rød `[...]` i `index.html`.
+## Bestilling (erhverv) og venteliste
+- Priser i `CONFIG` i `assets/js/main.js` er **ekskl. moms**: 1.196 kr. intro til og med 14. nov. 2026, derefter 1.436 kr. (= 1.495/1.795 inkl. moms).
+- Erhvervsformularen (`erhvervsbestilling`): antal, virksomhed (firmanavn, CVR, EAN valgfrit, adresse), kontaktperson, levering (firmaadresse eller anden adresse), betaling med faktura, accept af handelsbetingelser.
+- Ventelisten (`venteliste`): navn, e-mail og samtykke.
+- `CONFIG.submitTo` styrer, hvor formularerne sendes hen:
+  - `'netlify'` – Netlify Forms. Formularerne har allerede `data-netlify="true"`, honeypot og `form-name`. Indsendelser ses i Netlify → Forms, kan eksporteres som CSV og sendes videre på mail.
+  - en URL – fx et Formspree-endpoint; data sendes som JSON.
+  - `''` – preview: intet sendes, og beskeden siger det.
 
 ## Palette
 | Token | Hex | |

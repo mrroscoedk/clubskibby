@@ -65,7 +65,7 @@
         <a href="#uret">Uret</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a class="btn btn-sm" href="#koeb">Forudbestil</a>
+      <a class="btn btn-sm" href="#koeb">Bestil</a>
     </div>
   </header>
 
@@ -79,11 +79,11 @@
           <h1>Bliv en lille del af <em>cykelsportens historie.</em></h1>
           <p class="lead">Fem Grand Tour-etapesejre samlet på én hvid urskive, med stål og gyldne detaljer. Skabt sammen med Jesper Skibby, rytteren der kørte med hjertet uden på trøjen. Kun 500 eksemplarer i første udgave.</p>
           <div class="hero-cta">
-            <a class="btn" href="#koeb">Forudbestil dit eksemplar</a>
+            <a class="btn" href="#koeb">Bestil til virksomheden</a>
             <a class="link-arrow" href="#historien">Læs historien</a>
           </div>
           <dl class="hero-facts">
-            <div><dt>Introduktionspris</dt><dd data-price="unit">1.495 kr.</dd></div>
+            <div><dt>Pris ekskl. moms</dt><dd data-price="unit">1.196 kr.</dd></div>
             <div><dt>Oplag</dt><dd>500 stk.</dd></div>
             <div><dt>Afsendelse</dt><dd>25. januar</dd></div>
           </dl>
@@ -221,23 +221,71 @@
 
         <div class="buy-panel">
           <span class="section-no">03</span>
-          <p class="eyebrow">Forudbestilling · 500 stk.</p>
+          <p class="eyebrow">Erhverv · Eksklusiv bestilling</p>
           <h2>Skibby Watch<span>Limited First Edition</span></h2>
           <p class="variant">Hvid skive · stål · gyldne detaljer</p>
-          <p class="price"><span id="unit-price">1.495 kr.</span> <s id="regular-price">1.795 kr.</s> <small>inkl. moms</small></p>
-          <p class="price-note" id="price-note">Introduktionspris til og med 14. november 2026. Derefter 1.795 kr.</p>
+          <p class="price"><span id="unit-price">1.196 kr.</span> <s id="regular-price">1.436 kr.</s> <small>ekskl. moms</small></p>
+          <p class="price-note" id="price-note">Introduktionspris til og med 14. november 2026. Derefter 1.436 kr. ekskl. moms.</p>
 
-          <form class="qty-form" id="buy-form" novalidate>
-            <label class="qty-label" for="qty">Antal</label>
-            <div class="qty-row">
-              <div class="qty" role="group" aria-label="Vælg antal">
-                <button type="button" class="qty-btn" data-step="-1" aria-label="Færre">−</button>
-                <input id="qty" name="qty" type="number" inputmode="numeric" min="1" max="500" value="1">
-                <button type="button" class="qty-btn" data-step="1" aria-label="Flere">+</button>
+          <form class="order" id="buy-form" name="erhvervsbestilling" method="post" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+            <input type="hidden" name="form-name" value="erhvervsbestilling">
+            <p class="hp" aria-hidden="true"><label>Udfyld ikke <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+            <div class="order-step">
+              <label class="qty-label" for="qty">Antal</label>
+              <div class="qty-row">
+                <div class="qty" role="group" aria-label="Vælg antal">
+                  <button type="button" class="qty-btn" data-step="-1" aria-label="Færre">−</button>
+                  <input id="qty" name="antal" type="number" inputmode="numeric" min="1" max="500" value="1">
+                  <button type="button" class="qty-btn" data-step="1" aria-label="Flere">+</button>
+                </div>
+                <p class="qty-total" aria-live="polite">I alt <strong id="total-price">—</strong><span id="total-incl"></span></p>
               </div>
-              <p class="qty-total" aria-live="polite">I alt <strong id="total-price">—</strong></p>
             </div>
-            <button type="submit" class="btn btn-block"><span class="btn-label">Forudbestil</span> <svg class="ic-inline" aria-hidden="true"><use href="#i-wheel"/></svg></button>
+
+            <fieldset class="order-step">
+              <legend>Virksomhed</legend>
+              <div class="fields">
+                <div class="field f-wide"><label for="company">Firmanavn</label><input id="company" name="firmanavn" autocomplete="organization" required data-error="Skriv firmanavnet."></div>
+                <div class="field"><label for="cvr">CVR-nr.</label><input id="cvr" name="cvr" inputmode="numeric" pattern="\d{8}" maxlength="8" required data-error="CVR-nr. er 8 cifre."></div>
+                <div class="field"><label for="ean">EAN-nr. <em>valgfrit</em></label><input id="ean" name="ean" inputmode="numeric" pattern="\d{13}" maxlength="13" data-error="EAN-nr. er 13 cifre."></div>
+                <div class="field f-wide"><label for="street">Adresse</label><input id="street" name="adresse" autocomplete="street-address" required data-error="Skriv firmaets adresse."></div>
+                <div class="field f-zip"><label for="zip">Postnr.</label><input id="zip" name="postnr" inputmode="numeric" pattern="\d{4}" maxlength="4" autocomplete="postal-code" required data-error="4 cifre."></div>
+                <div class="field f-city"><label for="city">By</label><input id="city" name="by" autocomplete="address-level2" required data-error="Skriv byen."></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="order-step">
+              <legend>Kontaktperson</legend>
+              <div class="fields">
+                <div class="field f-wide"><label for="contact">Navn</label><input id="contact" name="kontaktperson" autocomplete="name" required data-error="Skriv dit navn."></div>
+                <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required data-error="Skriv en gyldig e-mail."></div>
+                <div class="field"><label for="phone">Telefon</label><input id="phone" name="telefon" type="tel" autocomplete="tel" pattern="[0-9 +]{8,}" required data-error="Skriv et telefonnummer."></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="order-step">
+              <legend>Levering</legend>
+              <label class="check"><input type="checkbox" id="same-address" name="samme_adresse" checked><span>Levér til firmaets adresse</span></label>
+              <div class="fields" id="delivery-fields" hidden>
+                <div class="field f-wide"><label for="d-att">Att.</label><input id="d-att" name="levering_att" autocomplete="shipping name"></div>
+                <div class="field f-wide"><label for="d-street">Leveringsadresse</label><input id="d-street" name="levering_adresse" autocomplete="shipping street-address" data-error="Skriv leveringsadressen."></div>
+                <div class="field f-zip"><label for="d-zip">Postnr.</label><input id="d-zip" name="levering_postnr" inputmode="numeric" pattern="\d{4}" maxlength="4" autocomplete="shipping postal-code" data-error="4 cifre."></div>
+                <div class="field f-city"><label for="d-city">By</label><input id="d-city" name="levering_by" autocomplete="shipping address-level2" data-error="Skriv byen."></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="order-step">
+              <legend>Betaling</legend>
+              <label class="pay-option">
+                <input type="radio" name="betaling" value="faktura" checked>
+                <span><b>Betal med faktura</b> Fakturaen sendes til jeres e-mail, når bestillingen er bekræftet.</span>
+              </label>
+              <label class="check" for="terms"><input type="checkbox" id="terms" name="accept_betingelser" required data-error="Accepter handelsbetingelserne for at bestille."><span>Jeg accepterer <a href="#">handelsbetingelserne</a></span></label>
+            </fieldset>
+
+            <button type="submit" class="btn btn-block"><span class="btn-label">Bestil med faktura</span> <svg class="ic-inline" aria-hidden="true"><use href="#i-wheel"/></svg></button>
+            <p class="form-status" id="order-status" role="status" aria-live="polite"></p>
           </form>
 
           <ul class="usps">
@@ -245,6 +293,22 @@
             <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Forventet afsendelse</b> 25. januar 2027</span></li>
             <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Gratis levering</b> direkte til døren</span></li>
           </ul>
+
+          <div class="waitlist" id="venteliste">
+            <h3>Privatperson?</h3>
+            <p>Tilmeld dig ventelisten, så giver vi besked, når vi åbner for bestilling til privatpersoner.</p>
+            <form id="waitlist-form" name="venteliste" method="post" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+              <input type="hidden" name="form-name" value="venteliste">
+              <p class="hp" aria-hidden="true"><label>Udfyld ikke <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+              <div class="fields">
+                <div class="field"><label for="w-name">Navn</label><input id="w-name" name="navn" autocomplete="name" required data-error="Skriv dit navn."></div>
+                <div class="field"><label for="w-email">E-mail</label><input id="w-email" name="email" type="email" autocomplete="email" required data-error="Skriv en gyldig e-mail."></div>
+              </div>
+              <label class="check" for="w-consent"><input type="checkbox" id="w-consent" name="samtykke" required data-error="Giv samtykke for at komme på listen."><span>Ja tak, I må sende mig en mail, når der åbnes for privatpersoner.</span></label>
+              <button type="submit" class="btn btn-ghost">Skriv mig op</button>
+              <p class="form-status" id="waitlist-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
         </div>
       </div>
     </section>
@@ -270,12 +334,12 @@
             <p>Forventet afsendelse er 25. januar 2027. Leveringen er gratis.</p>
           </details>
           <details>
-            <summary>Er forudbestillingen bindende?</summary>
-            <p>Nej. Forudbestillingen er ikke bindende for det endelige køb, og en eventuel betaling eller et depositum følger den lovbestemte fortrydelsesret. Bliver uret ikke leveret, refunderes hele din betaling.</p>
+            <summary>Kan jeg købe som privatperson?</summary>
+            <p>Ikke endnu. First edition sælges i første omgang til virksomheder. <a href="#venteliste">Skriv dig på ventelisten</a>, så giver vi besked, når vi åbner for privatpersoner.</p>
           </details>
           <details>
             <summary>Kan jeg købe flere ure?</summary>
-            <p>Ja. Vælg bare det antal, du vil have, i forudbestillingen. Der er ingen grænse pr. ordre, så længe der er ure tilbage af de 500.</p>
+            <p>Ja. Vælg det antal, I har brug for. Der er ingen grænse pr. ordre, så længe der er ure tilbage af de 500.</p>
           </details>
           <details>
             <summary>Hvad står der på skiven?</summary>
@@ -319,7 +383,7 @@
       <b>Skibby Watch</b>
       <span id="sticky-price">1.495 kr.</span>
     </div>
-    <a class="btn btn-sm" href="#koeb" tabindex="-1">Forudbestil</a>
+    <a class="btn btn-sm" href="#koeb" tabindex="-1">Bestil</a>
   </div>
 
   <script src="assets/js/main.js" defer></script>
