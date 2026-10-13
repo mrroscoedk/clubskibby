@@ -50,14 +50,20 @@ async function toSheet(data) {
 }
 
 async function sendMail({ to, subject, html, text, replyTo }) {
-  if (!process.env.RESEND_API_KEY || !process.env.MAIL_FROM || !to.length) return false;
+  const missing = ['RESEND_API_KEY', 'MAIL_FROM'].filter((k) => !process.env[k]);
+  if (!to.length) missing.push('modtager (ORDER_NOTIFY_TO/TALK_NOTIFY_TO eller kundens e-mail)');
+  if (missing.length) {
+    console.warn(`Mail "${subject}" sprunget over – mangler: ${missing.join(', ')}`);
+    return 'skipped';
+  }
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ from: process.env.MAIL_FROM, to, subject, html, text, reply_to: replyTo || undefined }),
   });
-  if (!res.ok) throw new Error(`Resend: ${res.status} ${(await res.text()).slice(0, 200)}`);
-  return true;
+  if (!res.ok) throw new Error(`Resend: ${res.status} ${(await res.text()).slice(0, 300)}`);
+  console.log(`Mail sendt: "${subject}" → ${to.join(', ')}`);
+  return 'sent';
 }
 
 module.exports = async (req, res) => {
@@ -104,6 +110,7 @@ module.exports = async (req, res) => {
   // Mails: en fejl her må ikke få kunden til at bestille igen, så den logges kun.
   const site = (process.env.SITE_URL || `https://${req.headers.host || 'skibbywatch.dk'}`).replace(/\/$/, '');
   const mails = [];
+  let mailStatus = [];
   try {
     if (form === 'erhvervsbestilling') {
       const confirmation = mail.customerOrder({ data, order, site, shipDate: SHIP_DATE });
@@ -116,10 +123,12 @@ module.exports = async (req, res) => {
       mails.push(sendMail({ to: list(process.env.TALK_NOTIFY_TO || process.env.ORDER_NOTIFY_TO), replyTo: data.email, ...notify }));
     }
     const results = await Promise.allSettled(mails);
+    mailStatus = results.map((x) => (x.status === 'fulfilled' ? x.value : 'failed'));
     results.filter((r) => r.status === 'rejected').forEach((r) => console.error('Mail fejlede:', r.reason));
   } catch (err) {
     console.error('Mail fejlede:', err);
   }
 
-  return res.status(200).json({ ok: true, order: order && { number: order.number, qty: order.qty, total: order.total } });
+  // "mail" viser status pr. mail (sent / skipped / failed) – til fejlsøgning i browserens netværksfane.
+  return res.status(200).json({ ok: true, mail: mailStatus, order: order && { number: order.number, qty: order.qty, total: order.total } });
 };
