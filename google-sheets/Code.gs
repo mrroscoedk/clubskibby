@@ -42,3 +42,14 @@ function doPost(e) {
   }
   return ContentService.createTextOutput('ok');
 }
+
+// Åbn webappens /exec-adresse i et privat browservindue: står der "Skibby formularer kører",
+// er adgangen sat rigtigt. Beder Google om login, står "Hvem har adgang" ikke til "Alle".
+function doGet() {
+  return ContentService.createTextOutput('Skibby formularer kører');
+}
+
+// Kør denne i editoren (vælg testVenteliste → Kør) for at tjekke, at scriptet kan skrive i arket.
+function testVenteliste() {
+  doPost({ parameter: { 'form-name': 'venteliste', navn: 'Test', email: 'test@example.com', samtykke: 'on' } });
+}
