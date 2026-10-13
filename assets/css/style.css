@@ -753,19 +753,15 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 /* FAQ ---------------------------------------------------------------- */
 .faq { padding: clamp(80px, 12vw, 160px) 0; border-top: 1px solid var(--line); }
 
-/* Den rigtige udgave ------------------------------------------------- */
-.real { padding: clamp(80px, 12vw, 160px) 0; background: var(--paper-2); border-top: 1px solid var(--line); }
-.real-grid {
+/* "Findes uret allerede?" — lille fotostrimmel i FAQ'en */
+.real-strip {
   display: grid;
-  grid-template-columns: .75fr 1fr;
-  gap: 14px;
+  grid-template-columns: .75fr 1fr 1.35fr;
+  gap: 8px;
+  max-width: 560px;
 }
-.real-grid .ph { border: 0; box-shadow: var(--shadow-soft); }
-.real-main { aspect-ratio: 3 / 4; }
-.real-dial { aspect-ratio: 1; }
-.real-side { grid-column: 1 / -1; aspect-ratio: 12 / 5; }
-.real-side img { object-position: 50% 55%; }
-.real-note { margin: 18px 0 0; font-size: 13px; color: var(--steel); }
+.real-strip .ph { aspect-ratio: auto; height: 150px; border: 0; }
+.real-note { margin: 10px 0 0; padding-bottom: 22px !important; font-size: 12.5px; }
 .faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(24px, 4vw, 56px); }
 .faq-list details { border-bottom: 1px solid var(--line); }
 .faq-list { padding-top: 12px; border-top: 1px solid var(--ink);
@@ -856,8 +852,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   .gallery .ph { aspect-ratio: 3 / 4; height: auto; }
   .gallery .ph-wide { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 5; }
   .specs { grid-template-columns: 1fr; }
-  .real-grid { gap: 8px; }
-  .real-side { aspect-ratio: 2 / 1; }
+  .real-strip .ph { height: 96px; }
   .tech { grid-template-columns: 1fr; }
     .tech-list div { grid-template-columns: 1fr; gap: 2px; }
   .buy-media { position: static; margin-left: 10px; }
