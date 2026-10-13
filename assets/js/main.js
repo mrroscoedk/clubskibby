@@ -76,7 +76,7 @@
   render();
 
   // Reveal + etapeprofil
-  document.querySelectorAll('.section-head, .story-body, .story-media, .gallery, .specs, .buy-panel, .faq-list')
+  document.querySelectorAll('.section-head, .story-body, .story-media, .gallery, .specs, .buy-panel, .faq-list, .real-grid')
     .forEach((el) => el.classList.add('reveal'));
 
   const io = new IntersectionObserver(

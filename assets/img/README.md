@@ -7,3 +7,4 @@ Billeder (placeholders, skaleret til web):
 - uret-forfra.jpeg — produktbillede af uret forfra på hvid baggrund.
 
 Pressebilleder/skærmbilleder skal rettighedsafklares før lancering.
+- rigtig-ur.webp, rigtig-skive.webp, rigtig-profil.webp — fotos af det godkendte ur (kun lys/farvebalance, beskæring og rotation justeret).
