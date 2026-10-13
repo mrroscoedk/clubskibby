@@ -83,7 +83,7 @@
             <a class="link-arrow" href="#historien">Læs historien</a>
           </div>
           <dl class="hero-facts">
-            <div><dt>Pris ekskl. moms</dt><dd data-price="unit">1.196 kr.</dd></div>
+            <div><dt>Introduktionspris</dt><dd data-price="unit">1.495 kr.</dd></div>
             <div><dt>Oplag</dt><dd>500 stk.</dd></div>
             <div><dt>Afsendelse</dt><dd>25. januar</dd></div>
           </dl>
@@ -224,8 +224,9 @@
           <p class="eyebrow">Erhverv · Eksklusiv bestilling</p>
           <h2>Skibby Watch<span>Limited First Edition</span></h2>
           <p class="variant">Hvid skive · stål · gyldne detaljer</p>
-          <p class="price"><span id="unit-price">1.196 kr.</span> <s id="regular-price">1.436 kr.</s> <small>ekskl. moms</small></p>
-          <p class="price-note" id="price-note">Introduktionspris til og med 14. november 2026. Derefter 1.436 kr. ekskl. moms.</p>
+          <p class="price"><span id="unit-price">1.495 kr.</span> <s id="regular-price">1.795 kr.</s> <small>inkl. moms</small></p>
+          <p class="price-ex"><span id="unit-ex">1.196 kr.</span> ekskl. moms</p>
+          <p class="price-note" id="price-note">Introduktionspris til og med 14. november 2026. Derefter 1.795 kr.</p>
 
           <form class="order" id="buy-form" name="erhvervsbestilling" method="post" data-netlify="true" netlify-honeypot="bot-field" novalidate>
             <input type="hidden" name="form-name" value="erhvervsbestilling">
@@ -239,7 +240,7 @@
                   <input id="qty" name="antal" type="number" inputmode="numeric" min="1" max="500" value="1">
                   <button type="button" class="qty-btn" data-step="1" aria-label="Flere">+</button>
                 </div>
-                <p class="qty-total" aria-live="polite">I alt <strong id="total-price">—</strong><span id="total-incl"></span></p>
+                <p class="qty-total" aria-live="polite">I alt <strong id="total-price">—</strong><span id="total-ex"></span></p>
               </div>
             </div>
 

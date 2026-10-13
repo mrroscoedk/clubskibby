@@ -1,9 +1,9 @@
 /* Skibby Watch — skibbyclub.dk */
 (() => {
-  // Erhvervspriser i DKK ekskl. moms. Introprisen gælder til og med introUntil.
+  // Priser i DKK inkl. moms. Introprisen gælder til og med introUntil.
   const CONFIG = {
-    introPrice: 1196,   // 1.495 kr. inkl. moms
-    regularPrice: 1436, // 1.795 kr. inkl. moms
+    introPrice: 1495,
+    regularPrice: 1795,
     vat: 0.25,
     introUntil: new Date('2026-11-15T00:00:00+01:00'),
     edition: 500,       // ingen grænse pr. ordre; kun oplaget sætter loftet
@@ -40,9 +40,12 @@
   input.max = String(max);
   document.querySelectorAll('#unit-price, #sticky-price, [data-price="unit"]')
     .forEach((el) => { el.textContent = fmt(unitPrice); });
+  const exVat = (n) => Math.round(n / (1 + CONFIG.vat));
+  $('#unit-ex').textContent = fmt(exVat(unitPrice));
   if (!isIntro) {
     $('#regular-price').remove();
-    $('#price-note').textContent = 'Pris ekskl. moms. Forventet afsendelse 25. januar 2027.';
+    $('#price-note').textContent = 'Forventet afsendelse 25. januar 2027.';
+    document.querySelector('.hero-facts dt').textContent = 'Pris';
   }
 
   const clamp = (v) => Math.max(1, Math.min(max, Number.isFinite(v) ? Math.round(v) : 1));
@@ -53,7 +56,7 @@
     minus.disabled = q <= 1;
     plus.disabled = q >= max;
     $('#total-price').textContent = fmt(q * unitPrice);
-    $('#total-incl').textContent = `${fmt(Math.round(q * unitPrice * (1 + CONFIG.vat)))} inkl. moms`;
+    $('#total-ex').textContent = `${fmt(exVat(q * unitPrice))} ekskl. moms`;
   };
 
   form.querySelectorAll('.qty-btn').forEach((btn) =>

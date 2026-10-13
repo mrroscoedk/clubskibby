@@ -679,7 +679,9 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   margin-bottom: 1.6rem;
 }
 .price s { font-size: 22px; font-weight: 400; color: var(--steel); margin-left: 6px; }
-.price-note { font-size: 13.5px; color: var(--gold-ink); margin: -1rem 0 1.4rem; }
+.price { margin-bottom: .5rem; }
+.price-ex { margin: 0 0 1.2rem; font-size: 14px; color: var(--steel); }
+.price-note { font-size: 13.5px; color: var(--gold-ink); margin: 0 0 1.4rem; }
 .price small { font-size: 10px; text-transform: uppercase; color: var(--steel); font-family: var(--font-label); }
 
 /* Erhvervsbestilling -------------------------------------------------- */
@@ -742,7 +744,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 .form-status.is-ok { padding: 12px 14px; background: rgba(192, 151, 74, .12); color: var(--ink); }
 .form-status.is-error { color: #A3412C; }
 .hp { position: absolute; left: -9999px; }
-#total-incl { display: block; text-align: right; font-size: 12px; color: var(--steel); }
+#total-ex { display: block; text-align: right; font-size: 12px; color: var(--steel); }
 
 /* Venteliste for privatpersoner */
 .waitlist { margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }

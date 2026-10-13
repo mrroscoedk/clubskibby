@@ -6,7 +6,7 @@ Statisk landingsside (HTML/CSS/JS, ingen build). Åbn `index.html` direkte i bro
 Ligger i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en stribet pladsholder med filnavnet.
 
 ## Bestilling (erhverv) og venteliste
-- Priser i `CONFIG` i `assets/js/main.js` er **ekskl. moms**: 1.196 kr. intro til og med 14. nov. 2026, derefter 1.436 kr. (= 1.495/1.795 inkl. moms).
+- Priser i `CONFIG` i `assets/js/main.js` er inkl. moms: 1.495 kr. til og med 14. nov. 2026, derefter 1.795 kr. Prisen ekskl. moms beregnes og vises nedenunder.
 - Erhvervsformularen (`erhvervsbestilling`): antal, virksomhed (firmanavn, CVR, EAN valgfrit, adresse), kontaktperson, levering (firmaadresse eller anden adresse), betaling med faktura, accept af handelsbetingelser.
 - Ventelisten (`venteliste`): navn, e-mail og samtykke.
 - `CONFIG.submitTo` styrer, hvor formularerne sendes hen:
