@@ -1,7 +1,10 @@
 /**
+ * @OnlyCurrentDoc
+ *
  * Skibby Watch – modtager formularer fra skibbyclub.dk og skriver dem i dette Google Sheet.
  * Hver formular får sin egen fane: "venteliste" og "erhvervsbestilling".
  * Indsæt i Udvidelser → Apps Script, og udrul som webapp (se README.md).
+ * Scriptet kan kun skrive i dette ene ark og sender ingen mails.
  */
 
 // Kolonner pr. formular, i den rækkefølge de skal stå i arket.
@@ -14,9 +17,6 @@ const COLUMNS = {
     'betaling', 'accept_betingelser',
   ],
 };
-
-// Valgfrit: få en mail ved hver ny erhvervsbestilling. Lad stå tom for at slå fra.
-const NOTIFY_EMAIL = '';
 
 function doPost(e) {
   const p = e.parameter || {};
@@ -39,14 +39,6 @@ function doPost(e) {
     sheet.appendRow([new Date()].concat(cols.map((c) => safe(p[c]))));
   } finally {
     lock.releaseLock();
-  }
-
-  if (form === 'erhvervsbestilling' && NOTIFY_EMAIL) {
-    MailApp.sendEmail(
-      NOTIFY_EMAIL,
-      `Ny bestilling: ${p.antal} stk. – ${p.firmanavn}`,
-      COLUMNS.erhvervsbestilling.map((c) => `${c}: ${p[c] || ''}`).join('\n')
-    );
   }
   return ContentService.createTextOutput('ok');
 }

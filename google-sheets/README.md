@@ -7,8 +7,8 @@ kun scriptet kan skrive i det, og kun de personer, du deler arket med, kan læse
 ## Opsætning (ca. 5 minutter)
 
 1. **Opret arket.** Gå til sheets.new med jeres firmakonto, og kald det fx "Skibby Watch – formularer".
-2. **Indsæt scriptet.** Vælg *Udvidelser → Apps Script*. Slet det, der står, og indsæt hele indholdet af `Code.gs`.
-   Vil du have en mail ved hver bestilling, så skriv din e-mail i `NOTIFY_EMAIL`. Gem.
+2. **Indsæt scriptet.** Vælg *Udvidelser → Apps Script*. Slet det, der står, og indsæt hele indholdet af `Code.gs`. Gem.
+   Scriptet beder kun om adgang til netop dette ark (`@OnlyCurrentDoc`) og sender ingen mails.
 3. **Udrul som webapp.** Klik *Udrul → Ny udrulning*, vælg typen *Webapp*, og sæt:
    - *Udfør som:* **Mig**
    - *Hvem har adgang:* **Alle**
@@ -31,4 +31,6 @@ kun scriptet kan skrive i det, og kun de personer, du deler arket med, kan læse
   Fejler netværket, får brugeren en fejlbesked og kan prøve igen.
 - **GDPR:** brug firmaets Google Workspace-konto (databehandleraftale), nævn ventelisten i privatlivspolitikken,
   og slet listen, når den ikke længere bruges. Samtykket gemmes som "on" i kolonnen *samtykke*.
+- **Besked om nye bestillinger:** i arket kan du vælge *Værktøjer → Notifikationsregler → Når der foretages ændringer*,
+  så sender Google dig selv en mail, uden at scriptet skal have mailadgang.
 - **Eksport:** *Filer → Download → CSV* til fx Mailchimp, når der åbnes for privatpersoner.
