@@ -232,6 +232,19 @@ p { margin: 0 0 1em; }
   translate: 0 -50%;
   background: var(--gold-metal);
 }
+/* Mærkning af AI-genererede billeder (EU AI Act art. 50) */
+.ph[data-ai]::after {
+  content: "AI-genereret";
+  position: absolute;
+  z-index: 3;
+  right: 8px; bottom: 8px;
+  font: 500 9px/1 var(--font-label);
+  letter-spacing: .04em;
+  color: rgba(29, 29, 27, .7);
+  background: rgba(244, 243, 238, .72);
+  padding: 3px 5px;
+  pointer-events: none;
+}
 .ph-tall { aspect-ratio: 4 / 5; }
 .ph-square { aspect-ratio: 1; }
 .ph-wide { aspect-ratio: 16 / 10; }
@@ -816,6 +829,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   .brand { letter-spacing: .2em; font-size: 12px; gap: 10px; }
   .hero-grid, .buy-grid, .faq-grid, .story-grid, .footer-inner { grid-template-columns: 1fr; }
   .hero-media { order: -1; margin-right: 10px; margin-bottom: 52px; }
+  .hero-media .ph[data-ai]::after { right: auto; left: 8px; }
   .hero-media .ph { aspect-ratio: 1; }
   .medal { left: auto; right: -6px; bottom: -40px; width: 112px; height: 112px; padding: 5px; }
   .dial-ring { width: 118%; }
