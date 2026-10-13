@@ -833,9 +833,9 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   display: grid;
   gap: 12px;
 }
-.usps li { display: flex; gap: 12px; font-size: 14.5px; line-height: 1.45; color: var(--ink-soft); }
-.usps svg { width: 16px; height: 16px; flex: none; color: var(--gold); margin-top: 1px; }
-.usps b { color: var(--ink); font-weight: 600; display: block; }
+.usps li { display: flex; gap: 12px; font-size: 14.5px; line-height: 1.45; color: var(--ink); }
+.usps svg { width: 16px; height: 16px; flex: none; color: var(--gold); margin-top: 2px; }
+.usps em { font-style: normal; color: var(--steel); }
 
 /* FAQ ---------------------------------------------------------------- */
 .faq { padding: clamp(80px, 12vw, 160px) 0; border-top: 1px solid var(--line); }
