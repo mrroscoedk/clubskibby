@@ -23,6 +23,14 @@ kun scriptet kan skrive i det, og kun de personer, du deler arket med, kan læse
 
 Ændrer du senere i scriptet, skal du vælge *Udrul → Administrer udrulninger → Rediger → Ny version*, så URL'en forbliver den samme.
 
+## Når formularen ændres
+
+- **Nyt felt:** giv feltet et `name` i `index.html`. Første gang nogen udfylder det, opretter scriptet selv en kolonne til sidst i fanen. Scriptet skal ikke ændres.
+- **Fjernet felt:** kolonnen bliver stående i arket, men nye rækker er tomme dér. Slet den selv, hvis den ikke skal bruges.
+- **Omdøbt felt** (nyt `name`): giver en ny kolonne; den gamle bliver stående med de tidligere data.
+- **Ny formular** (ny `form-name`): tilføj navnet i `FORMS` øverst i scriptet og implementer en ny version.
+- **Afkrydsningsfelter** sendes kun, når de er sat kryds i, så deres kolonne dukker først op ved første kryds.
+
 ## Godt at vide
 
 - **"Alle" betyder kun, at alle kan *sende* til scriptet**, ikke at de kan se arket.

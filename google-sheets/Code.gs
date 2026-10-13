@@ -3,40 +3,48 @@
  *
  * Skibby Watch – modtager formularer fra skibbyclub.dk og skriver dem i dette Google Sheet.
  * Hver formular får sin egen fane: "venteliste" og "erhvervsbestilling".
- * Indsæt i Udvidelser → Apps Script, og udrul som webapp (se README.md).
  * Scriptet kan kun skrive i dette ene ark og sender ingen mails.
+ *
+ * Felter tilføjes automatisk: kommer der et felt, som arket ikke har en kolonne til,
+ * oprettes kolonnen sidst. Ændringer i formularen kræver derfor ingen ændring her.
  */
 
-// Kolonner pr. formular, i den rækkefølge de skal stå i arket.
-const COLUMNS = {
-  venteliste: ['navn', 'email', 'samtykke'],
-  erhvervsbestilling: [
-    'antal', 'firmanavn', 'cvr', 'ean', 'adresse', 'postnr', 'by',
-    'kontaktperson', 'email', 'telefon',
-    'anden_leveringsadresse', 'levering_att', 'levering_adresse', 'levering_postnr', 'levering_by',
-    'betaling', 'accept_betingelser',
-  ],
-};
+// Formularer, der må skrive i arket (= fanernes navne). Kun en ny formular kræver en ændring her.
+const FORMS = ['venteliste', 'erhvervsbestilling'];
+
+// Felter, der aldrig gemmes.
+const SKIP = ['form-name', 'bot-field'];
 
 function doPost(e) {
-  const p = e.parameter || {};
+  const p = (e && e.parameter) || {};
   const form = p['form-name'];
-  const cols = COLUMNS[form];
-  if (!cols) return ContentService.createTextOutput('ukendt formular');
+  if (FORMS.indexOf(form) === -1) return ContentService.createTextOutput('ukendt formular');
+
+  const fields = Object.keys(p).filter((k) => SKIP.indexOf(k) === -1).slice(0, 60);
 
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try {
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = ss.getSheetByName(form) || ss.insertSheet(form);
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(['tidspunkt'].concat(cols));
+
+    // Overskrifter: læs dem, der findes, og tilføj nye felter som kolonner til sidst.
+    let header = sheet.getLastColumn() > 0
+      ? sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String)
+      : [];
+    if (header.length === 0) header = ['tidspunkt'];
+    const added = fields.filter((f) => header.indexOf(f) === -1);
+    if (added.length) {
+      header = header.concat(added);
+      sheet.getRange(1, 1, 1, header.length).setValues([header]).setFontWeight('bold');
       sheet.setFrozenRows(1);
     }
-    // Et apostrof foran tal bevarer foranstillede nuller (fx postnr og CVR) og
-    // forhindrer, at tekst der starter med =, +, - eller @ tolkes som formel.
+
+    // Et apostrof foran bevarer foranstillede nuller (postnr, CVR) og forhindrer,
+    // at tekst der starter med =, +, - eller @ tolkes som formel.
     const safe = (v) => (v === undefined || v === '' ? '' : "'" + String(v).slice(0, 500));
-    sheet.appendRow([new Date()].concat(cols.map((c) => safe(p[c]))));
+    const row = header.map((h) => (h === 'tidspunkt' ? new Date() : safe(p[h])));
+    sheet.appendRow(row);
   } finally {
     lock.releaseLock();
   }
@@ -49,7 +57,7 @@ function doGet() {
   return ContentService.createTextOutput('Skibby formularer kører');
 }
 
-// Kør denne i editoren (vælg testVenteliste → Kør) for at tjekke, at scriptet kan skrive i arket.
+// Kør i editoren (vælg testVenteliste → Kør) for at tjekke, at scriptet kan skrive i arket.
 function testVenteliste() {
   doPost({ parameter: { 'form-name': 'venteliste', navn: 'Test', email: 'test@example.com', samtykke: 'on' } });
 }
