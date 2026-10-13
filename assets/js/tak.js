@@ -67,7 +67,7 @@
       }
       status.classList.add('is-ok');
     } catch {
-      status.textContent = 'Det gik ikke igennem. Prøv igen, eller skriv til jesper@skibbyur.dk.';
+      status.textContent = 'Det gik ikke igennem. Prøv igen, eller skriv til info@skibbywatch.dk.';
       status.classList.add('is-error');
       btn.disabled = false;
     }

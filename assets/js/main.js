@@ -245,7 +245,7 @@
         const sent = await send(f);
         onDone(sent);
       } catch {
-        statusEl.textContent = 'Det gik ikke igennem. Prøv igen, eller skriv til jesper@skibbyur.dk.';
+        statusEl.textContent = 'Det gik ikke igennem. Prøv igen, eller skriv til info@skibbywatch.dk.';
         statusEl.classList.add('is-error');
       } finally {
         btn.disabled = false;

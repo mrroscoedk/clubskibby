@@ -30,7 +30,7 @@ Ligger i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en
    - `SHEETS_URL` – Apps Script-webappens `/exec`-adresse
    - `RESEND_API_KEY` – nøglen fra trin 2
    - `MAIL_FROM` – fx `Skibby Watch <ordre@skibbywatch.dk>`
-   - `MAIL_REPLY_TO` – hvor kundens svar skal hen, fx `jesper@skibbyur.dk`
+   - `MAIL_REPLY_TO` – hvor kundens svar skal hen, fx `info@skibbywatch.dk`
    - `ORDER_NOTIFY_TO` – hvem får "ny ordre" (flere adresser adskilles med komma)
    - `TALK_NOTIFY_TO` – hvem får foredragsforespørgsler
 4. Redeploy. Uden Resend-variablerne gemmes indsendelser stadig i arket, men der sendes ingen mails.

@@ -9,7 +9,7 @@
 //   SHEETS_URL         Apps Script-webappens /exec-adresse
 //   RESEND_API_KEY     API-nøgle fra resend.com
 //   MAIL_FROM          afsender, fx "Skibby Watch <ordre@skibbywatch.dk>" (domænet skal være verificeret i Resend)
-//   MAIL_REPLY_TO      (valgfri) svar-adresse på ordrebekræftelsen, fx jesper@skibbyur.dk
+//   MAIL_REPLY_TO      (valgfri) svar-adresse på ordrebekræftelsen, fx info@skibbywatch.dk
 //   ORDER_NOTIFY_TO    modtager(e) af "ny ordre", kommasepareret
 //   TALK_NOTIFY_TO     modtager(e) af foredragsforespørgsler, kommasepareret (falder tilbage til ORDER_NOTIFY_TO)
 
