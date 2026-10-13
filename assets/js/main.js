@@ -43,7 +43,6 @@
   const exVat = (n) => Math.round(n / (1 + CONFIG.vat));
   $('#unit-ex').textContent = fmt(exVat(unitPrice));
   if (!isIntro) {
-    $('#regular-price').remove();
     $('#price-note').textContent = 'Forventet afsendelse 25. januar 2027.';
     document.querySelector('.hero-facts dt').textContent = 'Pris';
   }

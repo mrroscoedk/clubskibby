@@ -680,7 +680,7 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 }
 .price s { font-size: 22px; font-weight: 400; color: var(--steel); margin-left: 6px; }
 .price { margin-bottom: .5rem; }
-.price-ex { margin: 0 0 1.2rem; font-size: 14px; color: var(--steel); }
+.price-ex { margin: 0 0 1.2rem; font-size: 13px; color: var(--steel); font-variant-numeric: tabular-nums; }
 .price-note { font-size: 13.5px; color: var(--gold-ink); margin: 0 0 1.4rem; }
 .price small { font-size: 10px; text-transform: uppercase; color: var(--steel); font-family: var(--font-label); }
 
