@@ -66,6 +66,17 @@
   input.addEventListener('blur', render);
   render();
 
+  // Fold firmaformularen ud
+  const openBtn = $('#order-open');
+  const details = $('#order-details');
+  openBtn.addEventListener('click', () => {
+    details.hidden = false;
+    openBtn.hidden = true;
+    openBtn.setAttribute('aria-expanded', 'true');
+    $('#company').focus({ preventScroll: true });
+    details.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
   // Separat leveringsadresse
   const same = $('#same-address');
   const delivery = $('#delivery-fields');

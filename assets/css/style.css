@@ -684,6 +684,8 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 
 /* Erhvervsbestilling -------------------------------------------------- */
 .order { display: grid; gap: 22px; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+.order-details { display: grid; gap: 22px; animation: unfold .5s var(--ease); scroll-margin-top: 96px; }
+@keyframes unfold { from { opacity: 0; transform: translateY(-8px); } }
 .order-step { margin: 0; padding: 0; border: 0; min-width: 0; }
 .order-step legend, .waitlist h3 {
   padding: 0;
@@ -920,6 +922,9 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   .field, .field.f-zip, .field.f-city { grid-column: 1 / -1; }
   .field.f-zip { grid-column: span 2; }
   .field.f-city { grid-column: span 4; }
+  .waitlist .field { grid-column: span 3; }
+  .btn-block { padding-inline: 14px; letter-spacing: .12em; }
+  .btn-block .ic-inline { display: none; }
   .real-strip .ph { height: 96px; }
   .tech { grid-template-columns: 1fr; }
     .tech-list div { grid-template-columns: 1fr; gap: 2px; }

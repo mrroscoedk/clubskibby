@@ -243,6 +243,9 @@
               </div>
             </div>
 
+            <button type="button" class="btn btn-block" id="order-open" aria-expanded="false" aria-controls="order-details">Bestil som virksomhed <svg class="ic-inline" aria-hidden="true"><use href="#i-wheel"/></svg></button>
+
+            <div class="order-details" id="order-details" hidden>
             <fieldset class="order-step">
               <legend>Virksomhed</legend>
               <div class="fields">
@@ -284,8 +287,9 @@
               <label class="check" for="terms"><input type="checkbox" id="terms" name="accept_betingelser" required data-error="Accepter handelsbetingelserne for at bestille."><span>Jeg accepterer <a href="#">handelsbetingelserne</a></span></label>
             </fieldset>
 
-            <button type="submit" class="btn btn-block"><span class="btn-label">Bestil med faktura</span> <svg class="ic-inline" aria-hidden="true"><use href="#i-wheel"/></svg></button>
-            <p class="form-status" id="order-status" role="status" aria-live="polite"></p>
+              <button type="submit" class="btn btn-block"><span class="btn-label">Bestil med faktura</span> <svg class="ic-inline" aria-hidden="true"><use href="#i-wheel"/></svg></button>
+              <p class="form-status" id="order-status" role="status" aria-live="polite"></p>
+            </div>
           </form>
 
           <ul class="usps">
