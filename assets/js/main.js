@@ -176,12 +176,12 @@
   }, 120));
 
   // Separat leveringsadresse
-  const same = $('#same-address');
+  const other = $('#other-address');
   const delivery = $('#delivery-fields');
   const deliveryRequired = ['#d-street', '#d-zip', '#d-city'].map((sel) => $(sel));
-  same.addEventListener('change', () => {
-    delivery.hidden = same.checked;
-    deliveryRequired.forEach((el) => { el.required = !same.checked; });
+  other.addEventListener('change', () => {
+    delivery.hidden = !other.checked;
+    deliveryRequired.forEach((el) => { el.required = other.checked; });
   });
 
   // Validering med fejlbesked under feltet
