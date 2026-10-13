@@ -7,11 +7,9 @@
     vat: 0.25,
     introUntil: new Date('2026-11-15T00:00:00+01:00'),
     edition: 500,       // ingen grænse pr. ordre; kun oplaget sætter loftet
-    // Hvor formularerne sendes hen:
-    //   'netlify'  – Netlify Forms (siden skal hostes på Netlify)
-    //   en URL     – fx et Formspree-endpoint, modtager JSON
-    //   ''         – preview: intet sendes, og det står tydeligt i beskeden
-    submitTo: '',
+    // Webadressen på Google Apps Script-webappen, der skriver i Google Sheet.
+    // Se google-sheets/README.md. Tom = preview: intet sendes, og det står i beskeden.
+    sheetsUrl: '',
     // Opslag i CVR-registeret via cvrapi.dk (gratis, begrænset antal opslag pr. dag).
     // Sæt token, hvis I køber et abonnement hos cvrapi.dk.
     cvr: { url: 'https://cvrapi.dk/api', token: '' },
@@ -219,26 +217,18 @@
 
   // Afsendelse
   const send = async (f) => {
+    if (!CONFIG.sheetsUrl) return false; // preview: intet modtager-endpoint sat op
     const data = new FormData(f);
-    if (CONFIG.submitTo === 'netlify') {
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString(),
-      });
-      if (!res.ok) throw new Error(res.status);
-      return true;
-    }
-    if (CONFIG.submitTo) {
-      const res = await fetch(CONFIG.submitTo, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(Object.fromEntries(data)),
-      });
-      if (!res.ok) throw new Error(res.status);
-      return true;
-    }
-    return false; // preview: intet modtager-endpoint sat op
+    if (data.get('bot-field')) return true; // spam-robot: lad som om det lykkedes
+    data.delete('bot-field');
+    // Apps Script svarer ikke på CORS-preflight, så vi sender en "simpel" formular-POST.
+    // Svaret kan derfor ikke læses; en netværksfejl kaster stadig, og så vises fejlbeskeden.
+    await fetch(CONFIG.sheetsUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: new URLSearchParams(data),
+    });
+    return true;
   };
 
   const wire = (f, statusEl, onDone) => {
