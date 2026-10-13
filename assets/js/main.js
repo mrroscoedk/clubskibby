@@ -96,10 +96,12 @@
     const q = new URLSearchParams({ ...params, country: 'dk', format: 'json' });
     if (CONFIG.cvr.token) q.set('token', CONFIG.cvr.token);
     const res = await fetch(`${CONFIG.cvr.url}?${q}`);
-    const data = res.ok ? await res.json() : null;
-    const hit = data && data.vat && !data.error ? data : null;
-    cvrCache.set(key, hit);
-    return hit;
+    const data = await res.json().catch(() => null);
+    // NOT_FOUND er et rigtigt svar; alt andet (fx QUOTA_EXCEEDED) betyder, at opslaget ikke kunne laves.
+    if (data && data.error === 'NOT_FOUND') { cvrCache.set(key, null); return null; }
+    if (!data || data.error || !data.vat) throw new Error(data?.error || res.status);
+    cvrCache.set(key, data);
+    return data;
   };
 
   const fillCompany = (c) => {
@@ -129,7 +131,8 @@
       if (c) fillCompany(c);
       else cvrHint.textContent = 'Intet firma fundet. Udfyld selv felterne.';
     } catch {
-      cvrHint.textContent = '';
+      lastVat = '';
+      cvrHint.textContent = 'CVR-opslag svarer ikke lige nu. Udfyld selv felterne.';
     }
   });
 
