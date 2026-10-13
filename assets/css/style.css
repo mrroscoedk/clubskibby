@@ -915,6 +915,81 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
 .reveal { transform: translateY(14px); transition: transform .9s var(--ease); }
 .reveal.is-visible { transform: none; }
 
+/* Kvitteringsside ----------------------------------------------------- */
+.thanks-page .header-inner .link-arrow { font-size: 11px; }
+.thanks { padding: clamp(48px, 8vw, 104px) 0 clamp(64px, 9vw, 120px); }
+.thanks-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: start;
+}
+.thanks-media { margin: 0; position: sticky; top: 104px; }
+.thanks-media .ph { filter: grayscale(1) contrast(1.05); border: 0; box-shadow: var(--shadow-soft); }
+.thanks-body h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(48px, 6vw, 84px);
+  line-height: .95;
+  letter-spacing: -.01em;
+  margin-bottom: 1.6rem;
+}
+.letter { max-width: 34em; }
+.letter p { font-size: 17px; color: var(--ink-soft); }
+.signature {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 34px !important;
+  color: var(--ink) !important;
+  margin: 1.4rem 0 0;
+}
+.receipt {
+  margin: 2.4rem 0 0;
+  max-width: 34em;
+  padding-top: 12px;
+  border-top: 1px solid var(--ink);
+  background:
+    repeating-linear-gradient(90deg, var(--gold) 0 3px, transparent 3px 60px) left top / 100% 12px no-repeat,
+    repeating-linear-gradient(90deg, rgba(29,29,27,.45) 0 1px, transparent 1px 12px) left top / 100% 7px no-repeat;
+}
+.receipt div { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.receipt dt {
+  font: 600 10px/1.6 var(--font-label);
+  font-stretch: 118%;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+.receipt dd { margin: 0; font-size: 15px; min-width: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.receipt small { color: var(--steel); font-size: 13px; }
+.receipt-note { margin: 14px 0 0; font-size: 13px; color: var(--steel); }
+
+/* Foredrag (opsalg) */
+.talk { padding: clamp(64px, 9vw, 120px) 0; background: var(--stone); color: var(--paper); }
+.talk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+.talk .section-no { color: var(--gold-light); }
+.talk h2 { color: var(--paper); margin-bottom: 1rem; }
+.talk h2 em {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1.3em;
+  margin-top: .1em;
+}
+.talk-copy p { color: var(--steel-light); max-width: 30em; }
+.thanks-page .site-footer { border-top: 1px solid rgba(244, 243, 238, .12); }
+.talk-form { display: grid; gap: 16px; }
+.talk-form .field label { color: var(--steel-light); }
+.talk-form .field label em { color: var(--steel-light); opacity: .7; }
+.talk-form .btn { background: var(--paper); color: var(--ink); }
+.talk-form .btn:hover { background: #fff; }
+.talk-form .form-status.is-ok { background: rgba(217, 185, 119, .16); color: var(--paper); }
+.talk-form .form-status.is-error, .talk-form .err { color: #F0B4A6; }
+
 /* Responsivt --------------------------------------------------------- */
 @media (max-width: 1024px) {
   .specs { grid-template-columns: repeat(2, 1fr); }
@@ -939,6 +1014,10 @@ blockquote cite { font-style: normal; font-family: var(--font-label); font-size:
   .gallery .ph { aspect-ratio: 3 / 4; height: auto; }
   .gallery .ph-wide { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 4 / 5; }
   .specs { grid-template-columns: 1fr; }
+  .thanks-grid, .talk-grid { grid-template-columns: 1fr; }
+  .thanks-media { position: static; max-width: 300px; }
+  #order-no { display: block; margin-top: 4px; }
+  .receipt div { grid-template-columns: 1fr; gap: 2px; }
   .field, .field.f-zip, .field.f-city { grid-column: 1 / -1; }
   .field.f-zip { grid-column: span 2; }
   .field.f-city { grid-column: span 4; }

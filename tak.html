@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F4F3EE">
+  <meta name="robots" content="noindex">
+  <title>Tak for bestillingen — Skibby Watch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="thanks-page" data-api="/api/submit">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-wheel" viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="24" cy="24" r="17.5" fill="none" stroke="currentColor" stroke-width="1"/>
+        <circle cx="24" cy="24" r="2.6" fill="currentColor"/>
+        <g stroke="currentColor" stroke-width=".8">
+          <line x1="24" y1="6.5" x2="24" y2="41.5"/><line x1="6.5" y1="24" x2="41.5" y2="24"/>
+          <line x1="11.6" y1="11.6" x2="36.4" y2="36.4"/><line x1="36.4" y1="11.6" x2="11.6" y2="36.4"/>
+          <line x1="17.3" y1="7.8" x2="30.7" y2="40.2"/><line x1="30.7" y1="7.8" x2="17.3" y2="40.2"/>
+          <line x1="7.8" y1="17.3" x2="40.2" y2="30.7"/><line x1="7.8" y1="30.7" x2="40.2" y2="17.3"/>
+        </g>
+      </symbol>
+      <symbol id="i-bike" viewBox="0 0 96 56">
+        <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="20" cy="36" r="16"/><circle cx="76" cy="36" r="16"/>
+          <path d="M20 36 L38 14 L66 14 L76 36"/><path d="M38 14 L48 36 L66 14"/><path d="M20 36 L48 36"/>
+          <path d="M36 9 h8"/><path d="M66 14 L63 6 h8"/>
+          <circle cx="48" cy="36" r="3"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="Skibby Watch, til forsiden">
+        <svg class="brand-wheel" aria-hidden="true"><use href="#i-wheel"/></svg>
+        <span>Skibby <b>Watch</b></span>
+      </a>
+      <a class="link-arrow" href="index.html">Til forsiden</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="thanks">
+      <div class="wrap thanks-grid">
+        <figure class="thanks-media">
+          <div class="ph ph-portrait" data-label="jesper-portraet.webp — Jesper">
+            <img src="assets/img/jesper-portraet.webp" width="1051" height="1496" alt="Portræt af Jesper Skibby med armene over kors og Skibby Watch på håndleddet">
+          </div>
+        </figure>
+
+        <div class="thanks-body">
+          <p class="eyebrow">Ordrebekræftelse<span id="order-no"></span></p>
+          <h1>Tak<span id="thanks-name"></span>.</h1>
+          <div class="letter">
+            <p>Tusind tak, fordi I vil være en del af første udgave. Uret betyder meget for mig. Det samler fem etapesejre og en masse gode minder fra landevejen, og det glæder mig, at det nu skal sidde på håndleddet hos jer.</p>
+            <p>Vi giver lyd, så snart urene er på vej.</p>
+            <p class="signature">Jesper Skibby</p>
+          </div>
+
+          <dl class="receipt" id="receipt" hidden>
+            <div><dt>Ordrenummer</dt><dd id="r-number">–</dd></div>
+            <div><dt>Antal</dt><dd id="r-qty"></dd></div>
+            <div><dt>I alt</dt><dd><span id="r-total"></span> <small id="r-total-ex"></small></dd></div>
+            <div><dt>Betaling</dt><dd>Faktura til <span id="r-email"></span></dd></div>
+            <div><dt>Afsendes</dt><dd>25. januar 2027 <small>(planlagt)</small></dd></div>
+          </dl>
+          <p class="receipt-note" id="receipt-note">Du modtager også en ordrebekræftelse på mail.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="talk" id="foredrag">
+      <div class="wrap talk-grid">
+        <div class="talk-copy">
+          <span class="section-no">Foredrag</span>
+          <h2>Book Jesper <em>til jeres næste arrangement.</em></h2>
+          <p>Få Jesper ud til kick-off, kundedag eller julefrokost. Han fortæller om livet i feltet, om at angribe, når andre holder igen, og om humøret, der bar ham gennem tre Grand Tours.</p>
+        </div>
+        <form class="talk-form" id="talk-form" name="foredrag" method="post" novalidate>
+          <input type="hidden" name="form-name" value="foredrag">
+          <input type="hidden" name="firmanavn" id="t-company">
+          <input type="hidden" name="ordrenummer" id="t-order">
+          <p class="hp" aria-hidden="true"><label>Udfyld ikke <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <div class="fields">
+            <div class="field"><label for="t-name">Navn</label><input id="t-name" name="kontaktperson" autocomplete="name" required data-error="Skriv dit navn."></div>
+            <div class="field"><label for="t-email">E-mail</label><input id="t-email" name="email" type="email" autocomplete="email" required data-error="Skriv en gyldig e-mail."></div>
+            <div class="field"><label for="t-phone">Telefon <em>valgfrit</em></label><input id="t-phone" name="telefon" type="tel" autocomplete="tel"></div>
+            <div class="field"><label for="t-msg">Dato eller anledning <em>valgfrit</em></label><input id="t-msg" name="besked" maxlength="300"></div>
+          </div>
+          <button type="submit" class="btn btn-block">Hør mere om et foredrag</button>
+          <p class="form-status" id="talk-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <svg class="footer-bike" aria-hidden="true"><use href="#i-bike"/></svg>
+        <p><b>Skibby Watch</b> · Limited First Edition</p>
+        <p class="muted">En del af Skibby Club</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#">Handelsbetingelser</a>
+        <a href="#">Privatlivspolitik</a>
+        <a href="mailto:jesper@skibbyur.dk">Kontakt</a>
+      </nav>
+      <p class="muted small">© 2026 skibbyclub.dk</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/tak.js" defer></script>
+</body>
+</html>

@@ -14,12 +14,10 @@ kun scriptet kan skrive i det, og kun de personer, du deler arket med, kan læse
    - *Hvem har adgang:* **Alle**
 
    Klik *Udrul*, og godkend adgangen (Google advarer, fordi scriptet er dit eget og ikke er gennemgået. Vælg *Avanceret → Gå til projektet*).
-4. **Kopiér webappens URL** (den ender på `/exec`), og indsæt den i `assets/js/main.js`:
-   ```js
-   sheetsUrl: 'https://script.google.com/macros/s/…/exec',
-   ```
+4. **Kopiér webappens URL** (den ender på `/exec`), og sæt den som miljøvariablen `SHEETS_URL` i Vercel
+   (Project → Settings → Environment Variables). Siden sender til `api/submit.js`, som skriver videre til arket.
 5. **Test.** Udfyld ventelisten på siden. Der kommer en fane "venteliste" med en ny række.
-   Første erhvervsbestilling opretter fanen "erhvervsbestilling".
+   Første erhvervsbestilling opretter fanen "erhvervsbestilling", og første foredragsforespørgsel fanen "foredrag".
 
 Ændrer du senere i scriptet, skal du vælge *Udrul → Administrer udrulninger → Rediger → Ny version*, så URL'en forbliver den samme.
 

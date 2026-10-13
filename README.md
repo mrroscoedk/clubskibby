@@ -10,7 +10,32 @@ Ligger i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en
 - Erhvervsformularen (`erhvervsbestilling`): antal, virksomhed (firmanavn, CVR, EAN valgfrit, adresse), kontaktperson, levering (firmaadresse eller anden adresse), betaling med faktura, accept af handelsbetingelser.
 - CVR-opslag via cvrapi.dk (`CONFIG.cvr`): 8 cifre i CVR-feltet udfylder firmanavn og adresse; søgning på firmanavn (min. 3 tegn) foreslår ét firma, som udfylder CVR og adresse. Gratis med begrænset antal opslag pr. dag; et token fra cvrapi.dk kan sættes i `CONFIG.cvr.token`. Svarer opslaget ikke, udfylder man bare selv.
 - Ventelisten (`venteliste`): navn, e-mail og samtykke.
-- Formularerne gemmes i et privat Google Sheet via Apps Script: sæt `CONFIG.sheetsUrl` i `assets/js/main.js`. Opsætning i `google-sheets/README.md`. Er `sheetsUrl` tom, sendes intet, og siden siger det.
+- Formularerne sendes til Vercel-funktionen `api/submit.js` (`CONFIG.apiUrl`), som gemmer i Google Sheet og sender mails via Resend. Opsætning nedenfor.
+
+## Kvitteringsside og foredrag
+- Efter en bestilling sendes kunden til `tak.html`: personlig tak fra Jesper, ordreoversigt og et tilbud om foredrag (formularen `foredrag`, udfyldt på forhånd med oplysningerne fra bestillingen).
+- Ordren videregives via `sessionStorage`; åbnes siden direkte, vises en generel tak.
+
+## Mails og opsætning på Vercel
+`api/submit.js` gemmer hver indsendelse i Google Sheet og sender:
+| Formular | Mail |
+| --- | --- |
+| `erhvervsbestilling` | Ordrebekræftelse til kunden + "Ny ordre" til `ORDER_NOTIFY_TO` |
+| `foredrag` | Forespørgsel til `TALK_NOTIFY_TO` |
+| `venteliste` | Ingen mail |
+
+1. Opret en gratis konto på resend.com, og verificér domænet `skibbyclub.dk` (Resend viser de DNS-poster, der skal tilføjes).
+2. Opret en API-nøgle i Resend.
+3. Sæt miljøvariablerne i Vercel → Project → Settings → Environment Variables:
+   - `SHEETS_URL` – Apps Script-webappens `/exec`-adresse
+   - `RESEND_API_KEY` – nøglen fra trin 2
+   - `MAIL_FROM` – fx `Skibby Watch <ordre@skibbyclub.dk>`
+   - `MAIL_REPLY_TO` – hvor kundens svar skal hen, fx `jesper@skibbyur.dk`
+   - `ORDER_NOTIFY_TO` – hvem får "ny ordre" (flere adresser adskilles med komma)
+   - `TALK_NOTIFY_TO` – hvem får foredragsforespørgsler
+4. Redeploy. Uden Resend-variablerne gemmes indsendelser stadig i arket, men der sendes ingen mails.
+
+Fejler en mail, gemmes ordren stadig, og kunden ser kvitteringssiden; fejlen kan ses i Vercel → Logs.
 
 ## Palette
 | Token | Hex | |

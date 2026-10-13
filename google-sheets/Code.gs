@@ -10,7 +10,7 @@
  */
 
 // Formularer, der må skrive i arket (= fanernes navne). Kun en ny formular kræver en ændring her.
-const FORMS = ['venteliste', 'erhvervsbestilling'];
+const FORMS = ['venteliste', 'erhvervsbestilling', 'foredrag'];
 
 // Felter, der aldrig gemmes.
 const SKIP = ['form-name', 'bot-field'];

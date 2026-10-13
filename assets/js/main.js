@@ -7,9 +7,9 @@
     vat: 0.25,
     introUntil: new Date('2026-11-15T00:00:00+01:00'),
     edition: 500,       // ingen grænse pr. ordre; kun oplaget sætter loftet
-    // Webadressen på Google Apps Script-webappen, der skriver i Google Sheet.
-    // Se google-sheets/README.md. Tom = preview: intet sendes, og det står i beskeden.
-    sheetsUrl: 'https://script.google.com/macros/s/AKfycbztOCtY6sI0ulYm_g5zn0PIaaVR9pu7sb6N4BZl4Tuobq9PYJTd_I0F5Pnsgw3DmaeW3Q/exec',
+    // Hvor formularerne sendes hen: Vercel-funktionen i api/submit.js, som gemmer i
+    // Google Sheet og sender mails. Tom = preview: intet sendes, og det står i beskeden.
+    apiUrl: '/api/submit',
     // Opslag i CVR-registeret via cvrapi.dk (gratis, begrænset antal opslag pr. dag).
     // Sæt token, hvis I køber et abonnement hos cvrapi.dk.
     cvr: { url: 'https://cvrapi.dk/api', token: '' },
@@ -217,18 +217,16 @@
 
   // Afsendelse
   const send = async (f) => {
-    if (!CONFIG.sheetsUrl) return false; // preview: intet modtager-endpoint sat op
-    const data = new FormData(f);
-    if (data.get('bot-field')) return true; // spam-robot: lad som om det lykkedes
-    data.delete('bot-field');
-    // Apps Script svarer ikke på CORS-preflight, så vi sender en "simpel" formular-POST.
-    // Svaret kan derfor ikke læses; en netværksfejl kaster stadig, og så vises fejlbeskeden.
-    await fetch(CONFIG.sheetsUrl, {
+    if (!CONFIG.apiUrl) return { preview: true }; // preview: intet modtager-endpoint sat op
+    const data = Object.fromEntries(new FormData(f));
+    const res = await fetch(CONFIG.apiUrl, {
       method: 'POST',
-      mode: 'no-cors',
-      body: new URLSearchParams(data),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     });
-    return true;
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok || !json.ok) throw new Error(json.error || res.status);
+    return json;
   };
 
   const wire = (f, statusEl, onDone) => {
@@ -255,18 +253,25 @@
     });
   };
 
-  wire(form, $('#order-status'), (sent) => {
+  // Efter en bestilling: gem et resumé til kvitteringssiden og send kunden derhen.
+  wire(form, $('#order-status'), (result) => {
     const q = clamp(parseInt(input.value, 10));
-    const company = $('#company').value;
-    const email = $('#email').value;
-    const status = $('#order-status');
-    status.classList.add('is-ok');
-    status.textContent = sent
-      ? `Tak, ${company}. Vi har modtaget bestillingen på ${q} ${q === 1 ? 'ur' : 'ure'}. Fakturaen sendes til ${email}.`
-      : `Preview: bestillingen på ${q} ${q === 1 ? 'ur' : 'ure'} er ikke sendt, fordi formularen endnu ikke er koblet til en modtager.`;
+    const order = {
+      number: result.order?.number || '',
+      qty: q,
+      total: q * unitPrice,
+      company: $('#company').value,
+      contact: $('#contact').value,
+      email: $('#email').value,
+      phone: $('#phone').value,
+      preview: !!result.preview,
+    };
+    try { sessionStorage.setItem('skibby-order', JSON.stringify(order)); } catch {}
+    window.location.href = 'tak.html';
   });
 
-  wire($('#waitlist-form'), $('#waitlist-status'), (sent) => {
+  wire($('#waitlist-form'), $('#waitlist-status'), (result) => {
+    const sent = !result.preview;
     const status = $('#waitlist-status');
     status.classList.add('is-ok');
     status.textContent = sent
