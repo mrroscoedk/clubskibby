@@ -37,6 +37,10 @@ Ligger i `assets/img/` (se `assets/img/README.md`). Mangler et billede, vises en
 
 Fejler en mail, gemmes ordren stadig, og kunden ser kvitteringssiden; fejlen kan ses i Vercel → Logs.
 
+## Besøgsstatistik
+
+Vercel Web Analytics er indsat som det statiske HTML-snippet (`/_vercel/insights/script.js`) i `<head>` på alle sider – ingen npm-pakke, da sitet ikke bruger Next.js. Slå det til under Vercel → projektet → Analytics → Enable og deploy igen. Det er cookiefrit og anonymt, og det står i privatlivspolitikken.
+
 ## Palette
 | Token | Hex | |
 | --- | --- | --- |
