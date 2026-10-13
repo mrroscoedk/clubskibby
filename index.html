@@ -250,8 +250,8 @@
             <fieldset class="order-step">
               <legend>Virksomhed</legend>
               <div class="fields">
-                <div class="field f-wide"><label for="company">Firmanavn</label><input id="company" name="firmanavn" autocomplete="organization" required data-error="Skriv firmanavnet."></div>
-                <div class="field"><label for="cvr">CVR-nr.</label><input id="cvr" name="cvr" inputmode="numeric" pattern="\d{8}" maxlength="8" required data-error="CVR-nr. er 8 cifre."></div>
+                <div class="field f-wide cvr-search"><label for="company">Firmanavn</label><input id="company" name="firmanavn" autocomplete="organization" required data-error="Skriv firmanavnet." role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="company-suggest"><ul class="suggest" id="company-suggest" role="listbox" hidden></ul></div>
+                <div class="field"><label for="cvr">CVR-nr.</label><input id="cvr" name="cvr" inputmode="numeric" pattern="\d{8}" maxlength="8" required data-error="CVR-nr. er 8 cifre."><span class="hint" id="cvr-hint" aria-live="polite"></span></div>
                 <div class="field"><label for="ean">EAN-nr. <em>valgfrit</em></label><input id="ean" name="ean" inputmode="numeric" pattern="\d{13}" maxlength="13" data-error="EAN-nr. er 13 cifre."></div>
                 <div class="field f-wide"><label for="street">Adresse</label><input id="street" name="adresse" autocomplete="street-address" required data-error="Skriv firmaets adresse."></div>
                 <div class="field f-zip"><label for="zip">Postnr.</label><input id="zip" name="postnr" inputmode="numeric" pattern="\d{4}" maxlength="4" autocomplete="postal-code" required data-error="4 cifre."></div>

@@ -12,6 +12,9 @@
     //   en URL     – fx et Formspree-endpoint, modtager JSON
     //   ''         – preview: intet sendes, og det står tydeligt i beskeden
     submitTo: '',
+    // Opslag i CVR-registeret via cvrapi.dk (gratis, begrænset antal opslag pr. dag).
+    // Sæt token, hvis I køber et abonnement hos cvrapi.dk.
+    cvr: { url: 'https://cvrapi.dk/api', token: '' },
   };
   const isIntro = Date.now() < CONFIG.introUntil.getTime();
   const unitPrice = isIntro ? CONFIG.introPrice : CONFIG.regularPrice;
@@ -78,6 +81,96 @@
     $('#company').focus({ preventScroll: true });
     details.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  // CVR-opslag: 8 cifre i CVR-feltet udfylder firma og adresse,
+  // og søgning på firmanavn foreslår et firma, der udfylder CVR og adresse.
+  const cvrInput = $('#cvr');
+  const companyInput = $('#company');
+  const suggest = $('#company-suggest');
+  const cvrHint = $('#cvr-hint');
+  const cvrCache = new Map();
+
+  const cvrLookup = async (params) => {
+    const key = new URLSearchParams(params).toString();
+    if (cvrCache.has(key)) return cvrCache.get(key);
+    const q = new URLSearchParams({ ...params, country: 'dk', format: 'json' });
+    if (CONFIG.cvr.token) q.set('token', CONFIG.cvr.token);
+    const res = await fetch(`${CONFIG.cvr.url}?${q}`);
+    const data = res.ok ? await res.json() : null;
+    const hit = data && data.vat && !data.error ? data : null;
+    cvrCache.set(key, hit);
+    return hit;
+  };
+
+  const fillCompany = (c) => {
+    companyInput.value = c.name || companyInput.value;
+    cvrInput.value = String(c.vat);
+    if (c.address) $('#street').value = c.address;
+    if (c.zipcode) $('#zip').value = c.zipcode;
+    if (c.city) $('#city').value = c.city;
+    [companyInput, cvrInput, $('#street'), $('#zip'), $('#city')].forEach((el) => {
+      if (el.closest('.is-invalid')) check(el);
+    });
+    cvrHint.textContent = `Hentet fra CVR: ${c.name}`;
+  };
+
+  let lastVat = '';
+  cvrInput.addEventListener('input', async () => {
+    const vat = cvrInput.value.replace(/\D/g, '');
+    if (vat.length !== 8 || vat === lastVat) {
+      if (vat.length !== 8) cvrHint.textContent = '';
+      return;
+    }
+    lastVat = vat;
+    cvrHint.textContent = 'Slår op i CVR …';
+    try {
+      const c = await cvrLookup({ vat });
+      if (cvrInput.value.replace(/\D/g, '') !== vat) return;
+      if (c) fillCompany(c);
+      else cvrHint.textContent = 'Intet firma fundet. Udfyld selv felterne.';
+    } catch {
+      cvrHint.textContent = '';
+    }
+  });
+
+  const closeSuggest = () => {
+    suggest.hidden = true;
+    suggest.replaceChildren();
+    companyInput.setAttribute('aria-expanded', 'false');
+  };
+  let searchTimer;
+  companyInput.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    const term = companyInput.value.trim();
+    if (term.length < 3) return closeSuggest();
+    searchTimer = setTimeout(async () => {
+      try {
+        const c = await cvrLookup({ search: term });
+        if (companyInput.value.trim() !== term || !c) return closeSuggest();
+        const li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        li.tabIndex = -1;
+        li.innerHTML = '<b></b><span></span>';
+        li.querySelector('b').textContent = c.name;
+        li.querySelector('span').textContent = `CVR ${c.vat}${c.city ? ` · ${c.city}` : ''}`;
+        const pick = () => { fillCompany(c); closeSuggest(); companyInput.focus(); };
+        li.addEventListener('mousedown', (e) => { e.preventDefault(); pick(); });
+        li.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); pick(); } });
+        suggest.replaceChildren(li);
+        suggest.hidden = false;
+        companyInput.setAttribute('aria-expanded', 'true');
+      } catch {
+        closeSuggest();
+      }
+    }, 450);
+  });
+  companyInput.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' && !suggest.hidden) { e.preventDefault(); suggest.firstChild.focus(); }
+    if (e.key === 'Escape') closeSuggest();
+  });
+  companyInput.addEventListener('blur', () => setTimeout(() => {
+    if (!suggest.contains(document.activeElement)) closeSuggest();
+  }, 120));
 
   // Separat leveringsadresse
   const same = $('#same-address');
