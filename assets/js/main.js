@@ -24,6 +24,11 @@
 
   const $ = (sel) => document.querySelector(sel);
 
+  // Vercel Web Analytics: custom events (snippet i <head>). Ingen persondata i data.
+  const track = (name, data) => { try { window.va && window.va('event', { name, data }); } catch {} };
+  document.querySelectorAll('a[data-track]').forEach((a) =>
+    a.addEventListener('click', () => track('Bestil klik', { placering: a.dataset.track })));
+
   // Billeder der ikke findes, skjules, så pladsholderen står tilbage.
   document.querySelectorAll('.ph img').forEach((img) => {
     const miss = () => img.classList.add('is-missing');
@@ -73,6 +78,7 @@
   const openBtn = $('#order-open');
   const details = $('#order-details');
   openBtn.addEventListener('click', () => {
+    track('Bestilling startet', { antal: clamp(parseInt(input.value, 10)) });
     details.hidden = false;
     openBtn.hidden = true;
     openBtn.setAttribute('aria-expanded', 'true');
@@ -266,6 +272,7 @@
       phone: $('#phone').value,
       preview: !!result.preview,
     };
+    if (!order.preview) track('Bestilling sendt', { antal: q });
     try { sessionStorage.setItem('skibby-order', JSON.stringify(order)); } catch {}
     window.location.href = 'tak.html';
   });

@@ -41,6 +41,11 @@ Fejler en mail, gemmes ordren stadig, og kunden ser kvitteringssiden; fejlen kan
 
 Vercel Web Analytics er indsat som det statiske HTML-snippet (`/_vercel/insights/script.js`) i `<head>` på alle sider – ingen npm-pakke, da sitet ikke bruger Next.js. Slå det til under Vercel → projektet → Analytics → Enable og deploy igen. Det er cookiefrit og anonymt, og det står i privatlivspolitikken.
 
+Custom events (kræver Pro-plan) sendes fra `assets/js/main.js` via `track()`:
+- `Bestil klik` – klik på en Bestil-knap, `placering`: header / hero / mobilbar
+- `Bestilling startet` – "Bestil som virksomhed" foldes ud, med `antal`
+- `Bestilling sendt` – bestillingen er gemt, med `antal`
+
 ## Palette
 | Token | Hex | |
 | --- | --- | --- |
