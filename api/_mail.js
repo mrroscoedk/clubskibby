@@ -51,7 +51,7 @@ function frame({ preheader, site, body }) {
         <td style="font-family:${SANS};font-size:13px;line-height:20px;color:#E4E2DA">
           <b style="color:#FFFFFF">Skibby Watch</b> · Limited First Edition<br>
           <span style="color:#C4C7C7">En del af Klub Skibby</span><br>
-          <span style="color:#9A9E9E;font-size:11px">Skibby v/ Jesper Skibby · CVR 30022076 · Møllegade 6B, 3250 Gilleleje</span>
+          <span style="color:#9A9E9E;font-size:11px">Skibby v/ Jesper Skibby · CVR 30022076</span>
         </td>
         <td align="right" style="font-family:${SANS};font-size:12px;line-height:20px;color:#C4C7C7">
           <a href="${esc(site)}" style="color:#D9B977;text-decoration:none">skibbywatch.dk</a><br>
